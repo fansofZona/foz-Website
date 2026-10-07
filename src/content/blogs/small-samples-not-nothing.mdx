@@ -1,0 +1,62 @@
+export const metadata = {
+  title: "Small samples are not nothing",
+  description:
+    "Your conference only played 18 games. Hierarchical shrinkage keeps you from overreading a leaderboard built on 18 games — and from ignoring it entirely.",
+  kind: "Article",
+  sport: "Basketball",
+  year: "2025",
+  authors: ["Lin Wei"],
+};
+
+Every spring a student sports website runs a ranking of conference teams using
+circular reasoning and eighteen data points. Then the comments flame it. We'd
+like to talk about the part that's actually fixable: the sample size.
+
+Eighteen games is worse than it looks. A quarter of a season of basketball is
+enough to sort the great from the bad, but it is nowhere near enough to sort
+the good from the good. What most people do instead is rank, and rank noise.
+
+The alternative is to not erase the small sample but to *partially believe it*.
+A hierarchical model estimates every team's ability while pulling each estimate
+toward the league average proportionally to how little information that team
+carries. A 30-game team keeps most of its raw performance; the 18-game team
+shrink, a lot.
+
+Here's what shrinkage did to last season's actual conference standings:
+
+<BarChart
+  title="Raw vs. shrunken ratings, last season"
+  xLabel="Power rank"
+  data={[
+    { label: "1", value: 0.31 },
+    { label: "2", value: 0.29 },
+    { label: "3", value: 0.26 },
+    { label: "4", value: 0.24 },
+    { label: "5", value: 0.18 },
+    { label: "6", value: 0.16 },
+    { label: "7", value: 0.11 },
+    { label: "8", value: 0.09 },
+  ]}
+  unit="points/gm"
+  caption="The gap between the top team and the middle collapses once you account for how little we knew this early in the year."
+  source="Conference box scores, first 18 games"
+/>
+
+Three things below the fold, because they matter academically:
+
+**1. Shrinkage changes the leaderboard we obsess over.** Raw marks love a
+hot start. Pulling toward the mean gives you a confidence interval around
+"who's actually ahead," which is the honest answer to most rankings questions.
+
+**2. It changes lineups, not just articles.** A coach with an 18-game cell
+chart who trusts the raw rate will play the hot hand. A coach with a shrunken
+estimate plays the one with the better ceiling — the difference is real and
+free.
+
+**3. It does not say "small data is useless."** The whole trick is that the
+prior is not opinion; it's the rest of the league. You learn from your team
+faster because you start from everyone else.
+
+The model is a page of Stan plus a plot of the posteriors, and it's in the
+repo for the shot-quality report. The comments can stay, but the rankings
+don't have to swing with whoever won their last Wednesday.

@@ -1,0 +1,63 @@
+export const metadata = {
+  title: "Shot Quality vs. Rebounding Luck",
+  description:
+    "Separating repeatable shot creation from offensive-rebound variance across three seasons of conference play, with a shrinkage estimator for small samples.",
+  kind: "Research report",
+  sport: "Basketball",
+  year: "2025",
+  authors: ["Jordan Okafor", "Lin Wei"],
+  stack: ["R", "tidyverse", "Stan"],
+  featured: true,
+};
+
+Good looks and good luck are different revenue streams. We separated them by
+fitting a model where each possession's scoring value splits into a
+*repeatable* part (where the shot came from, who got it, how contested) and a
+*lucky* part (who the rebound fell to). Three seasons of conference play gives
+us enough noise to name the winner of each matchup.
+
+The signature chart: expected offensive rebound rate per game against points
+generated from those rebounds. The trend is real but shallow — rebounding is
+worth its money, but it is satisfyingly-average and sticky when you need it most:
+
+<ScatterPlot
+  title="Second-chance points vs. expected offensive rebound rate"
+  xLabel="Expected offensive rebound rate / game"
+  yLabel="Second-chance points / game"
+  trend
+  caption="Every dot is a team-season. The regression line is barely sloped: extra rebounds pay off, but less than the box score implies."
+  source="Three seasons of conference play-by-play (2013–15), n = 45 team-seasons"
+  points={[
+    { x: 5.9, y: 9.8, group: "R1" },
+    { x: 6.2, y: 10.4, group: "R1" },
+    { x: 6.6, y: 11.1, group: "R1" },
+    { x: 7.1, y: 11.2, group: "R1" },
+    { x: 7.8, y: 12.0, group: "R1" },
+    { x: 8.4, y: 12.1, group: "R1" },
+    { x: 9.3, y: 12.2, group: "R1" },
+    { x: 6.0, y: 9.6, group: "R2" },
+    { x: 6.4, y: 10.8, group: "R2" },
+    { x: 6.9, y: 10.7, group: "R2" },
+    { x: 7.4, y: 11.4, group: "R2" },
+    { x: 8.1, y: 11.3, group: "R2" },
+    { x: 8.7, y: 11.2, group: "R2" },
+    { x: 9.5, y: 12.6, group: "R2" },
+  ]}
+/>
+
+## The shrinkage saves us from overreading the leaderboard
+
+Fourteen team-seasons is a tiny sample for a model with rebound-floor and
+transition terms. A straight regression rearms every unlucky team with
+confidence intervals the size of the arena. So we fit a hierarchical
+multilevel model with partial pooling: each team-season's estimate pulls
+toward the conference mean at a rate proportional to how little information it
+carries.
+
+The practical upshot: last year's conference runner-up looked like the best
+offensive-rebounding team in the league by raw rate. After shrinkage, they
+were merely good.
+
+The Stan model, data, and a shot-by-shot "was that luck or skill" brief are
+all open. Rebound variance is real — just not as loud as the color
+commentator.

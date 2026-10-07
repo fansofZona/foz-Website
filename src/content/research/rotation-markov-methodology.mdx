@@ -1,0 +1,66 @@
+export const metadata = {
+  title: "Rotation value in volleyball: the Markov model, explained",
+  description:
+    "How three seasons of charted film become a 6-state transition matrix, a stationary distribution, and per-rotation expected points.",
+  kind: "Methodology",
+  sport: "Volleyball",
+  year: "2024",
+  authors: ["Elena Varga", "Chris Dunlap"],
+  stack: ["Python", "NumPy"],
+};
+
+Volleyball's six rotations are a tiny, perfect Markov chain: your serve-receive
+alignment defines the state, the rally resolves to a point or a sideout, and
+you deterministically rotate. That structure means expected points per
+rotation is not random — it is the stationary behavior of a system we can
+measure.
+
+**Stage 1: chart the film.** We coded every rally of three conference seasons
+by the rotation it started in, the result, and who served. Three seasons, 200+
+matches, about 41,000 rallies, two annotators, one rulebook.
+
+**Stage 2: the transition matrix.** For each starting rotation `i`, we count
+what happens next: point won (`i` scores), point lost (opponent scores), or
+sideout (opponent wins the rally and *begins* their serve-receive in their
+corresponding rotation). The result is a 6×6 matrix `P` where `P[i,j]` is the
+probability of moving from your rotation `i` to opponent rotation `j` in one
+rally, plus the absorption probabilities of scoring.
+
+**Stage 3: solve the cycle.** If the chain is irreducible and aperiodic —
+practical volleyball is — there is a unique stationary distribution `π` and a
+well-defined expected points-per-rotation vector. The model's output,
+rotation by rotation, is what we report elsewhere; here is the shape of *how
+much* score depends on starting alignment:
+
+<DonutChart
+  title="Share of expected points by rotation slot"
+  caption="The two high rotations are your designated scorers; the deep set is survival volleyball."
+  source="Charted film, 3 conference seasons, n = 41k rallies"
+  data={[
+    { label: "R1", value: 17.9 },
+    { label: "R2", value: 17.2 },
+    { label: "R3", value: 15.4 },
+    { label: "R4", value: 14.6 },
+    { label: "R5", value: 16.1 },
+    { label: "R6", value: 18.8 },
+  ]}
+  unit="pts/rotation"
+/>
+
+**Why the chain is the right shape for this question.** A regression from
+rotation → points would treat each rally as independent. The Markov framing
+captures the mechanism: losing your serve to a bad rotation costs you the
+point *and* hands the opponent their best serve-receive alignment. The
+difference between playing your best passer alongside your best hitters and
+spreading them out is exactly a cascade, not a sum.
+
+**Validation.** We held out the final regular-season match for each team and
+predicted points per set from the season's matrix. Mean absolute error was
+0.7 points per set — better than the points share model, and it degraded
+gracefully when we truncated the training data to ten matches.
+
+**The caveat.** Our state machine has no notion of *serve order* (who serves
+next is part of the state in real volleyball). Adding it doubles the matrix
+size and buys maybe two percentage points of fit. We left it out, with
+blessing of the model police, because the rotation finding survives it either
+way.

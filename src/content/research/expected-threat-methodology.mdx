@@ -1,0 +1,62 @@
+export const metadata = {
+  title: "Expected threat, built by hand: full methodology",
+  description:
+    "The grid, the cell weights, the hand-tracking protocol, and the caveats behind our xT model on a full conference season.",
+  kind: "Methodology",
+  sport: "Soccer",
+  year: "2026",
+  authors: ["Maya Chen", "Diego Fuentes"],
+  stack: ["Python", "pandas", "scikit-learn"],
+  featured: true,
+};
+
+This is the methods note for our *Expected Threat in College Soccer* report.
+It is the part we usually skip at the meeting and then regret skipping.
+
+**The model.** The pitch is a 16×11 grid. Each cell gets a value equal to the
+probability that a possession ending in that cell eventually produces a goal
+within three actions — estimated with a one-step transition table, the way
+Karun Singh's original xT assigns cell prices by "what happens next, on
+average." A pass is worth the difference between the value of its destination
+cell and its start cell. That difference, accumulated, is xT.
+
+**The data.** No tracking feed exists for our conference, so we charted.
+Two annotators, one template, a book of "if ambiguous, count as carry"
+rules. Inter-rater agreement, measured on 500 shared events, was 0.91 for
+event type and 0.83 for location. The locations are the loose thread in the
+whole project; cell-level error washes out but pass-target error shows up in
+the wings.
+
+**The weight training.** Cell values are fit on the full 28-game season, then
+cross-validated in five folds at the match level so consecutive possessions in
+one game never leak into the same training fold.
+
+We verified the standard sanity checks: team-level xT correlates with goals
+(r = 0.82), and xT generated *against* a team correlates with expected
+conceded (r = 0.79). The model does not predict shots, it prices them.
+
+The one thing you should distrust about these numbers is how we handled
+keeper involvement — long balls toward the box are priced by their landing
+cell even when nobody is near it. Our sensitivity check below shows how the
+season's ranking shifts as that assumption gets stricter:
+
+<LineChart
+  title="Rank sensitivity to the ball-in-box assumption"
+  xLabel="Strictness of 'keeper claims it' rule"
+  yLabel="Conference rank (lower is better)"
+  caption="Solid lines differ little across assumptions; the two dashed ones are teams whose seasons live or die on lop-backs we couldn't classify well."
+  source="Our model, 5 assumption variants"
+  series={[
+    { name: "Mid-table pack", points: [{ x: "loose", y: 4 }, { x: "mid", y: 5 }, { x: "strict", y: 5 }] },
+    { name: "Aerial-reliant A", points: [{ x: "loose", y: 1 }, { x: "mid", y: 3 }, { x: "strict", y: 7 }], dashed: true },
+    { name: "Aerial-reliant B", points: [{ x: "loose", y: 2 }, { x: "mid", y: 2 }, { x: "strict", y: 6 }], dashed: true },
+  ]}
+/>
+
+**Reproduction.** The full pipeline — template, annotator rules, cell-weight
+optimizer, and per-match holdouts — ships in the repo. If your league has
+tracking data, skip the charting step and use the same cell weights; ours are
+calibrated to ordinary broadcast-visible events, not to x/y tracking.
+
+Send us your league's data and we'll run the same cross-validation. The
+argument is the point; the numbers just have to be cheap to recheck.

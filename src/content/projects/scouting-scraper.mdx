@@ -1,0 +1,51 @@
+export const metadata = {
+  title: "Open Scouting Scraper",
+  description:
+    "The collection layer behind most of our work: a polite, rate-limited scraper and schema that normalizes box scores across six sports into one warehouse.",
+  kind: "Tool",
+  sport: "Multi-sport",
+  year: "2024",
+  authors: ["Sam Trent", "Nora Blackwell"],
+  stack: ["Python", "Playwright", "DuckDB", "Postgres"],
+};
+
+Every project on this site starts in the same place: a scraper hitting a
+public source, a schema that fights back, and a warehouse that says "no" to
+the next six sports. This tool is all three in one repo.
+
+It is deliberately boring software. Politely rate-limited, cached, resumable,
+and re-runnable from scratch. We normalize scores, lineups, and event logs
+across six sports into one star schema so a cross-sport question can live in a
+single SQL query.
+
+A production team embarrassingly wonders why nobody had built it. Here's what
+a season of that boredom looks like:
+
+<BarChart
+  title="Games ingested per season, by sport"
+  xLabel="Sport"
+  data={[
+    { label: "Soccer", value: 612 },
+    { label: "Basketball", value: 744 },
+    { label: "Volleyball", value: 891 },
+    { label: "Baseball", value: 1532 },
+    { label: "Football", value: 262 },
+    { label: "Softball", value: 918 },
+  ]}
+  unit="games"
+  sort="none"
+  caption="Baseball floods the warehouse; everyone worse than a box score is a scrape away from their own."
+  source="2024–25 season, six sports"
+/>
+
+## Why you want this instead of an API
+
+APIs break, panels throttle, and someone always wants the 2019 archive. A
+deterministic scraper with a versioned schema survives all three. We keep the
+raw HTML and the parsed rows in the same warehouse, so when the scraper is
+wrong — and it was, badly, three times this season — the original source is
+one table away.
+
+The repo has the dockerfile, the tests, and an honest `KNOWN_ISSUES.md` that
+grows faster than we delete from it. Clone it, point it at your data, and
+print something.

@@ -1,0 +1,65 @@
+export const metadata = {
+  title: "The Cost of Going Out Fast",
+  description:
+    "Splits from 40,000 marathon finishes, and what they say about the pacing error that costs amateurs the most minutes.",
+  kind: "Article",
+  sport: "Track & Field",
+  year: "2024",
+  authors: ["Tomás Rivera"],
+  stack: ["R", "ggplot2"],
+};
+
+Every marathoner hears it from a friend they ran with once: "You absolutely
+started too fast." We turned that folklore into an estimate using 40,000
+finisher splits. For each of the 5km segments, we look at whether your split
+is faster or slower than your overall goal pace.
+
+The pattern is brutal and repeatable. The average amateur's second half is
+**nine minutes slower** than the first. And the entire distribution of
+outcomes is downstream of that first 10km:
+
+<LineChart
+  title="Cumulative slowing vs. planned pace margin"
+  xLabel="Race distance split"
+  yLabel="Minutes gained vs. goal pace"
+  series={[
+    {
+      name: "Paced to even splits",
+      points: [
+        { x: "5k", y: 0 },
+        { x: "10k", y: 0.4 },
+        { x: "half", y: 1.1 },
+        { x: "30k", y: 2.9 },
+        { x: "35k", y: 4.9 },
+        { x: "finish", y: 8.5 },
+      ],
+    },
+    {
+      name: "Started 8s/km fast",
+      points: [
+        { x: "5k", y: -2.1 },
+        { x: "10k", y: -3.0 },
+        { x: "half", y: -1.6 },
+        { x: "30k", y: 5.2 },
+        { x: "35k", y: 12.4 },
+        { x: "finish", y: 21.3 },
+      ],
+      dashed: true,
+    },
+  ]}
+  caption="Negative is time in the bank; the fast starters burn the bank and then pay through the legs."
+  source="40,000 finisher chips, four marathons"
+/>
+
+## The number to race by
+
+The cleanest result is the practical one: for every 5 seconds per km a runner
+goes out faster than their target even-split pace, they lose **~2 finisher
+minutes** beyond it, and the penalty compounds at the 30–35km wall. Even-split
+pacing isn't perfect — it's *least bad*, and it beats enthusiasm in 87% of
+runs.
+
+If you take one chart from this website to the start line, make it the
+spreadsheet version of that line. Ten seconds in the first 10km does not feel
+like ten seconds. It feels like two minutes, and you pay for it at mile
+nineteen, in cash.

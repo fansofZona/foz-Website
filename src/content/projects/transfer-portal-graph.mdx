@@ -1,0 +1,50 @@
+export const metadata = {
+  title: "Mapping the Transfer Portal",
+  description:
+    "A cleaned, open graph of five years of transfers — who feeds whom, which programs are net exporters, and how quickly talent cycles through conferences.",
+  kind: "Dataset",
+  sport: "Multi-sport",
+  year: "2025",
+  authors: ["Nora Blackwell", "Kofi Mensah"],
+  stack: ["Python", "NetworkX", "DuckDB", "Gephi"],
+};
+
+Five years of public transfer announcements, deduplicated, normalized, and
+loaded into a single graph. Nodes are schools; directed edges are athlete
+transfers; weights are transfer counts. The dataset fixes a common pain: every
+website reports transfers differently, so cross-program comparison has always
+been guesswork.
+
+The most cited stat from the build — net exporter balance by conference. Some
+leagues are tournament-driven buying floors; others are farm systems with a
+steady trickle up:
+
+<BarChart
+  title="Net transfer balance by conference (2020–2025)"
+  xLabel="Conference"
+  data={[
+    { label: "MVC", value: -38 },
+    { label: "C-USA", value: -27 },
+    { label: "MAC", value: -19 },
+    { label: "Big Sky", value: -14 },
+    { label: "SoCon", value: -9 },
+    { label: "Big East", value: 21 },
+    { label: "SEC", value: 34 },
+    { label: "PAC-12", value: 47 },
+  ]}
+  unit="transfers"
+  caption="Negative = net exporter. The funnel is real: mid-majors develop, power conferences buy the finished product."
+  source="Public transfer data, 2020–2025"
+/>
+
+Negative is an exporting conference; it replaces its draft losses with fresh
+freshmen every spring. Large positive balances cluster in leagues where
+basketball money travels easiest.
+
+The full export — edges, attributes, and the scrapers that rebuilt it — is on
+GitHub with a schema that takes about an hour to understand, because we wrote
+the docs after we were done.
+
+We learned the hard way that "announced move" ≠ "granted eligibility," so the
+graph carries both flags. Use the eligible-only subset unless you want to
+count players who never played a minute at their new school.

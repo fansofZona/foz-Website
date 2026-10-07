@@ -1,0 +1,70 @@
+export const metadata = {
+  title: "A shrinkage estimator for rebounding, explained start to finish",
+  description:
+    "From partial pooling to a leaderboard you can actually defend: the full statistical plumbing behind our shot-quality work.",
+  kind: "Methodology",
+  sport: "Basketball",
+  year: "2025",
+  authors: ["Jordan Okafor", "Lin Wei"],
+  stack: ["R", "Stan", "tidyverse"],
+};
+
+The *why* is short: fourteen team-seasons is not enough data to rank
+rebounding ability by raw rate. The *how* is a hierarchical model with
+partial pooling, and this post walks through it the way we wish someone had
+for us.
+
+**The setup.** Each team-season has a true offensive rebounding ability
+`θ`. The observed rate `y` is `θ` plus noise that shrinks as the number of
+rebound opportunities grows. A flat model treats each season as its own
+planet. A pooled model treats everyone as identical. Hierarchical shrinkage
+sits between: every `θ` is drawn from a league-wide distribution, and the
+posterior pulls each estimate toward the league mean in proportion to its
+variance.
+
+That means a 500-rebound team keeps nearly all of its raw rate, while an
+18-game season's rebound rate is dragged most of the way home. This is the
+behavior people accuse statistics of erasing — but erasing is the point:
+
+<ScatterPlot
+  title="Raw rate vs. shrunken rate, every team-season"
+  xLabel="Raw offensive rebound rate"
+  yLabel="Posterior mean (shrunken)"
+  color="plasma"
+  trend
+  caption="Almost every dot lands above the diagonal on the left — small-sample teams get pulled up toward the conference mean."
+  source="Three seasons, 45 team-seasons, 4 chains × 2000 draws"
+  points={[
+    { x: 0.26, y: 0.31, group: "Small sample" },
+    { x: 0.28, y: 0.32, group: "Small sample" },
+    { x: 0.31, y: 0.33, group: "Small sample" },
+    { x: 0.33, y: 0.34, group: "Small sample" },
+    { x: 0.36, y: 0.35, group: "Full season" },
+    { x: 0.38, y: 0.37, group: "Full season" },
+    { x: 0.41, y: 0.40, group: "Full season" },
+    { x: 0.44, y: 0.43, group: "Full season" },
+    { x: 0.29, y: 0.32, group: "Small sample" },
+    { x: 0.35, y: 0.36, group: "Full season" },
+    { x: 0.37, y: 0.36, group: "Full season" },
+    { x: 0.39, y: 0.38, group: "Full season" },
+    { x: 0.42, y: 0.41, group: "Full season" },
+    { x: 0.45, y: 0.44, group: "Full season" },
+  ]}
+/>
+
+**The prior is not opinion; it's the league.** The hierarchical prior is
+estimated from the same data, so it encodes "college teams mostly look alike."
+If a team truly is Alabama on the glass, its raw rate will be extreme enough
+that the noise cannot drag it down — shrinkage only deregulates noise.
+
+**The implementation.** One Stan program, weakly informative priors, four
+chains, and a convergence diagnostic we actually read (all R-hat < 1.01). The
+model file is 40 lines. The posterior is more interesting than the point
+estimates: the 90% intervals on team ordering overlap all over the place,
+which is exactly how we should talk about a 14-game sample.
+
+**The honest tail.** Shrinkage does not rescue selection on the response. Our
+leaderboard is sorted after fitting, and re-ranking a noisy distribution
+always overstates the extremes. We report credible intervals alongside every
+rank; you should demand them from anyone posting a per-game rebound chart in
+March.

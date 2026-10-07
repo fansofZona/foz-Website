@@ -1,0 +1,94 @@
+export const metadata = {
+  title: "Expected Threat in College Soccer",
+  description:
+    "We rebuilt an xT possession-value model on hand-tracked event data from a full conference season, then used it to rank build-up patterns that actually generate shots.",
+  kind: "Research report",
+  sport: "Soccer",
+  year: "2026",
+  authors: ["Maya Chen", "Diego Fuentes"],
+  stack: ["Python", "pandas", "scikit-learn", "Matplotlib"],
+  featured: true,
+};
+
+Expected Threat (xT) treats the pitch as a grid of cells and prices each cell
+by how much goal probability it feeds on average. Our contribution isn't the
+model — it's the data. We hand-tracked every pass, carry, and shot for one
+conference season (28 games, ~74,000 events), then asked: *which sequences
+actually manufacture danger, and how does that change by score state?*
+
+The headline result below: average accumulated xT per possession plotted
+against possession duration. Long possessions climb, but only in the opening
+minutes. Past ~25 seconds the marginal second adds almost nothing — until a
+shot finally happens, most of the value is in the first two thirds of a
+touch.
+
+<LineChart
+  title="Accumulated xT over a possession"
+  xLabel="Possession duration (s)"
+  yLabel="Accumulated xT / possession"
+  caption="Expected threat accumulates fast early and flattens — long possessions add little once the structure is set."
+  source="Hand-tracked conference season, n = 6,412 possessions"
+  series={[
+    {
+      name: "Average possession",
+      points: [
+        { x: 0, y: 0 },
+        { x: 5, y: 0.031 },
+        { x: 10, y: 0.047 },
+        { x: 15, y: 0.056 },
+        { x: 20, y: 0.061 },
+        { x: 30, y: 0.066 },
+        { x: 40, y: 0.068 },
+        { x: 50, y: 0.069 },
+      ],
+    },
+    {
+      name: "League baseline",
+      points: [
+        { x: 0, y: 0 },
+        { x: 5, y: 0.028 },
+        { x: 10, y: 0.041 },
+        { x: 15, y: 0.049 },
+        { x: 20, y: 0.053 },
+        { x: 30, y: 0.057 },
+        { x: 40, y: 0.058 },
+        { x: 50, y: 0.059 },
+      ],
+      dashed: true,
+    },
+  ]}
+/>
+
+That plateau is a coaching signal. Teams can spend 25 seconds and a dozen
+passes to get back to the position a good first pass created in five. When we
+ranked build-up patterns by xT per possession, direct entries into the final
+third dominated — not because they are prettier, but because they reach the
+dangerous cells before the block can slide.
+
+If your conference doesn't publish tracking data, hand-charting works. It just
+hurts. Everyone who touched a clipboard for this one can confirm.
+
+## What the whole model produced
+
+Aggregating every cell's value into passing contributions gives us a clean
+way to compare teams across very different styles:
+
+<BarChart
+  title="xT created per 90, by zone of entry"
+  xLabel="Zone of entry into the final third"
+  data={[
+    { label: "Wings", value: 1.42 },
+    { label: "Half-spaces", value: 1.18 },
+    { label: "Center", value: 0.76 },
+    { label: "Under / overlap", value: 0.51 },
+    { label: "Set pieces", value: 0.33 },
+  ]}
+  unit="xT"
+  sort="none"
+  caption="Wing entries beat central ones even after adjusting for possession share — the extra time on the ball matters."
+  source="xT model, conference season (28 games)"
+/>
+
+The full model, hand-tracker, and cell weights are published on GitHub. The
+caveat section is honest about how much depends on knowing *who* is on the
+ball, which our grid model deliberately ignores.

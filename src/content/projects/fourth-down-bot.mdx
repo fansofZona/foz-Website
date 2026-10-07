@@ -1,0 +1,63 @@
+export const metadata = {
+  title: "Fourth Down Decision Bot",
+  description:
+    "A live win-probability model that grades every fourth-down call in our team's games and posts the verdict before the punt unit is off the field.",
+  kind: "Tool",
+  sport: "Football",
+  year: "2026",
+  authors: ["Ren Alvarez", "Priya Nair"],
+  stack: ["Python", "XGBoost", "FastAPI", "Next.js"],
+  featured: true,
+};
+
+Every autumn we build something that makes us argue at practice. This year it
+is a bot that listens to our team's broadcasts, snaps the score and field
+position into a win-probability model, and posts the go-for-it verdict before
+the punt team trots out.
+
+The model is a gradient-boosted classifier fit on 18 years of play-by-play.
+Win probability is the usual engine: from each fourth-down state we branch
+into the distributions of punt, field-goal, and go outcomes, and compare
+expected win probability. The nudges surprise people, so we ship them as
+before/after values, not as commandments:
+
+<LineChart
+  title="Win probability along one drive — the decision moment"
+  xLabel="Down (1–4 at 1st-down chains under 20s)"
+  yLabel="Win probability"
+  caption="The bot's view of a single drive: WP creeps toward the go-for-it point, then the choice branches two ways."
+  source="Model output from our team's Week 3 game"
+  series={[
+    {
+      name: "Go for it",
+      points: [
+        { x: "1st", y: 0.61 },
+        { x: "2nd", y: 0.58 },
+        { x: "3rd", y: 0.55 },
+        { x: "4th", y: 0.57 },
+      ],
+    },
+    {
+      name: "Punt",
+      points: [
+        { x: "1st", y: 0.61 },
+        { x: "2nd", y: 0.58 },
+        { x: "3rd", y: 0.55 },
+        { x: "4th", y: 0.49 },
+      ],
+      dashed: true,
+    },
+  ]}
+/>
+
+## Where the model declines to have an opinion
+
+We deliberately cap the bot: it will not grade fourth downs when the game is
+blowout-ended (WP above 0.92) or in the final 40 seconds with a twelve-point
+lead. Those states are where win-probability models are least reliable and
+cheerleaders are most talkative.
+
+The whole thing runs in 900 milliseconds from whistle to poster. The repo
+includes the scraper, the model weights, and the full backtest where it would
+have agreed with public models 83% of the time and disagreed loudly at the
+margins — which is exactly where we want Garrett.

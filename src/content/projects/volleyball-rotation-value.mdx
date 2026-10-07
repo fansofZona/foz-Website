@@ -1,0 +1,47 @@
+export const metadata = {
+  title: "Rotation Value in Volleyball",
+  description:
+    "A Markov model of the six-rotation cycle that prices each serve-receive alignment in expected points, built from film we charted ourselves.",
+  kind: "Research report",
+  sport: "Volleyball",
+  year: "2024",
+  authors: ["Elena Varga", "Chris Dunlap"],
+  stack: ["Python", "NumPy", "Seaborn"],
+};
+
+Volleyball is the purest possession sport that nobody prices. The six rotation
+slots are a state machine: you serve-receive in one alignment, the rally
+resolves, and you rotate. We charted three seasons of film to build the
+transition matrix, then solved the cycle for each rotation's expected points.
+
+The result is a league table of serve-receive alignments. The gap between the
+best and worst rotation in the conference was worth about a set every three
+matches — the kind of edge teams leave on the table every single week:
+
+<DonutChart
+  title="Where the serve-receive value lives"
+  caption="Share of expected points by rotation slot. Two rotations carry most of the offense; the rest are mostly about surviving to the swing."
+  source="Our charted film, 3 seasons"
+  data={[
+    { label: "Rotation 1", value: 18.2 },
+    { label: "Rotation 2", value: 17.6 },
+    { label: "Rotation 3", value: 15.1 },
+    { label: "Rotation 4", value: 14.3 },
+    { label: "Rotation 5", value: 16.8 },
+    { label: "Rotation 6", value: 18.0 },
+  ]}
+  unit="pts/set"
+/>
+
+## What the model changes about substitutions
+
+The boring-but-valuable finding: teams that held their best passer in the
+weakest rotations — even if it meant playing your all-conference hitter two
+spots from her favorite one — outscored their talent. The Markov structure
+makes that visible: lost serve-receive points cascade through the cycle, not
+just the rally they happened in.
+
+Our agent recommends treating rotations 2 and 5 as the "drop the ball" states
+and designing lineups so the two best receivers overlap there. The film
+tracking templates and the transition matrices are published under an open
+license. Yes, you can send this to your coach.

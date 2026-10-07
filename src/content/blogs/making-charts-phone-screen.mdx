@@ -1,0 +1,78 @@
+export const metadata = {
+  title: "Making charts that survive a phone screen",
+  description:
+    "The style guide behind every chart on this site — D3 scales, honest axes, and the three decisions that separate a figure from a decoration.",
+  kind: "Article",
+  sport: "Multi-sport",
+  year: "2026",
+  authors: ["Maya Chen"],
+};
+
+We spent a season publishing charts and watching most of them die in a group
+chat. This week we're writing down what we learned so the next batch starts
+one level up. None of it is about fancy animation — four of the five rules are
+about losing information on purpose.
+
+**Rule zero: the axis starts where the data starts.** A zero-based axis is for
+bar heights, not for a comparison of two lines that never get close to zero.
+Every year some analyst chart inflates a two-percentage-point gap into a chasm
+by starting the axis at an arbitrary floor. We use D3's `.nice()` and
+`.domain()` and then *we look at the chart* before writing a word about it.
+
+Here is a line chart of the exact same data drawn two ways — a trend that
+exists, but must not be read as domination:
+
+<LineChart
+  title="Fastball velocity, two ways of looking"
+  xLabel="Season"
+  yLabel="Avg velocity (mph)"
+  caption="Same data, two scales. The top line starts at zero; the bottom one doesn't. The story is identical: a slow climb, nothing more."
+  source="Statcast averages, 2019–2025"
+  series={[
+    {
+      name: "0-based",
+      points: [
+        { x: "2019", y: 93.2 },
+        { x: "2020", y: 93.4 },
+        { x: "2021", y: 93.7 },
+        { x: "2022", y: 94.0 },
+        { x: "2023", y: 94.2 },
+        { x: "2024", y: 94.3 },
+        { x: "2025", y: 94.4 },
+      ],
+    },
+    {
+      name: "Zoomed",
+      points: [
+        { x: "2019", y: 93.2 },
+        { x: "2020", y: 93.4 },
+        { x: "2021", y: 93.7 },
+        { x: "2022", y: 94.0 },
+        { x: "2023", y: 94.2 },
+        { x: "2024", y: 94.3 },
+        { x: "2025", y: 94.4 },
+      ],
+      dashed: true,
+    },
+  ]}
+/>
+
+**Rule two: label the axis, not the chart.** The best figure in an article
+works without the caption. If your `y` axis says "n" and your reader has to
+walk back to the sentence above to discover it's *dugouts*, you have made ink
+they must trade for attention.
+
+**Rule three: worst case is the sidebar.** Assume the chart will be seen at
+640 pixels wide in a dark-mode chat app. Gridlines thin, annotation off, one
+takeaway maximum. If it needs three numbers to make sense, split it into
+three figures.
+
+**Rule four: interactivity is for exploration, not first reads.** A hover
+tooltip is a reward for curiosity, not a delivery mechanism for the finding.
+Every chart on this site has both layers: the static version carries the
+headline, and hovering reveals the point-level details.
+
+We rebuilt our whole chart pipeline around this earlier this year. The
+components that make it possible are the same ones that render this page —
+they ship in `src/components/charts`, and the next blog post is going to show
+you how to use them in your own MDX.

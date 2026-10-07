@@ -1,26 +1,408 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* ---- University of Arizona brand palette ---- */
+  /* Primary */
+  --color-arizona-red: #ab0520;
+  --color-arizona-blue: #0c234b;
+  /* Secondary */
+  --color-tinta: #03132e;
+  --color-azurite: #1e5288;
+  --color-arroyo: #106ab1;
+  --color-rain: #81ceeb;
+  --color-sonoran: #850000;
+  --color-bougainvillea: #c62840;
+  /* Accent — never used for text */
+  --color-saguaro: #7f8b5a;
+  --color-shade: #3f7a7a;
+  --color-brick: #85372b;
+  /* Neutral */
+  --color-cloud: #e5eff7;
+  --color-caliche: #f2efea;
+  --color-chalk: #ffffff;
+
+  /* ---- Role aliases (the Caldera roles, mapped onto Arizona) ---- */
+  --color-canvas: var(--color-caliche);        /* page background        */
+  --color-surface: var(--color-chalk);         /* cards, content blocks  */
+  --color-surface-muted: var(--color-cloud);   /* secondary fills        */
+  --color-feature: var(--color-arizona-red);   /* the one loud surface   */
+  --color-plasma: var(--color-arizona-blue);   /* halftone / hero block  */
+  --color-tag: var(--color-rain);              /* category badges        */
+  --color-ink: var(--color-tinta);             /* headings + body text   */
+  --color-ink-muted: #4d5a6d;                  /* supporting copy, 6.1:1 */
+  --color-hairline: #d8d3cb;                   /* 1.5px rules on canvas  */
+
+  /* ---- Typography ---- */
+  /* Report + box score: Libron for prose, Fira Code for figures. Both stacks
+     are the same two families — display and body differ by weight, not by
+     typeface — so the serif fallback chain is shared. */
+  --font-display: var(--font-libron), "Iowan Old Style", "Palatino Linotype",
+    Palatino, Georgia, ui-serif, serif;
+  --font-sans: var(--font-display);
+  --font-meta: var(--font-fira-code), ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
+
+  /*
+    Scale — tightened for a student club site; heroes top out at 88px.
+
+    The three small steps are pinned to Tailwind's xs/sm/base slots so that
+    shadcn components, which ship `text-xs` / `text-sm` / `text-base`, land on
+    this site's sizes instead of fighting them with overrides.
+  */
+  --text-xs: 12px;
+  --text-xs--line-height: 1.4;
+
+  --text-sm: 14px;
+  --text-sm--line-height: 1.5;
+
+  --text-base: 16px;
+  --text-base--line-height: 1.6;
+
+  --text-caption: 12px;
+  --text-caption--line-height: 1.4;
+
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 1.5;
+
+  --text-body: 16px;
+  --text-body--line-height: 1.6;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 1.6;
+
+  --text-subheading: 20px;
+  --text-subheading--line-height: 1.3;
+
+  --text-heading-sm: 24px;
+  --text-heading-sm--line-height: 1.25;
+
+  --text-heading: clamp(24px, 3vw, 30px);
+  --text-heading--line-height: 1.05;
+
+  --text-heading-lg: clamp(28px, 4vw, 44px);
+  --text-heading-lg--line-height: 1.02;
+
+  --text-heading-2xl: clamp(32px, 5vw, 56px);
+  --text-heading-2xl--line-height: 1;
+  --text-heading-2xl--letter-spacing: 0.01em;
+
+  --text-heading-3xl: clamp(36px, 6vw, 68px);
+  --text-heading-3xl--line-height: 0.98;
+  --text-heading-3xl--letter-spacing: 0.01em;
+
+  --text-display: clamp(44px, 8vw, 88px);
+  --text-display--line-height: 0.96;
+  --text-display--letter-spacing: 0.01em;
+
+  /* ---- Radii — the triple-radius system ---- */
+  --radius-small: 16px;
+  --radius-medium: 20px;
+  --radius-card: 40px;
+  --radius-button: 40px;
+  --radius-input: 100px;
+  --radius-pill: 800px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-arizona-red);
+  color: var(--color-chalk);
+}
+
+/*
+  One family carries both voices: Libron Regular for the poster sizes, Libron
+  Bold for the sub-headings. Bold gets slightly negative tracking because
+  serifs thicken at 700 and would otherwise look loose at 20–24px.
+*/
+@layer components {
+  /* Poster sizes — Libron 400. */
+  .display-xl {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+
+  /* Card and section-sub headings — Libron Bold, open counters at small sizes. */
+  .display-sm {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Moving work ticker — seamless loop, pauses on hover or keyboard focus. */
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 4%,
+    #000 96%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 4%,
+    #000 96%,
+    transparent
+  );
+}
+
+.ticker-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: ticker-scroll 60s linear infinite;
+}
+
+.ticker:hover .ticker-track,
+.ticker:focus-within .ticker-track {
+  animation-play-state: paused;
+}
+
+/*
+  Signature motif — halftone dots emerging from a solid Arizona Red field at the
+  top right and dissolving into Arizona Blue toward the bottom left.
+*/
+.halftone-wash {
+  background: radial-gradient(
+    125% 125% at 88% 6%,
+    var(--color-arizona-red) 0%,
+    var(--color-arizona-red) 26%,
+    color-mix(in srgb, var(--color-arizona-red) 55%, transparent) 46%,
+    transparent 72%
+  );
+}
+
+.halftone-dots {
+  background-image: radial-gradient(
+    var(--color-arizona-red) 41%,
+    transparent 43%
+  );
+  background-size: 13px 13px;
+  -webkit-mask-image: radial-gradient(
+    140% 140% at 88% 6%,
+    #000 18%,
+    rgba(0, 0, 0, 0.9) 42%,
+    rgba(0, 0, 0, 0.45) 62%,
+    transparent 88%
+  );
+  mask-image: radial-gradient(
+    140% 140% at 88% 6%,
+    #000 18%,
+    rgba(0, 0, 0, 0.9) 42%,
+    rgba(0, 0, 0, 0.45) 62%,
+    transparent 88%
+  );
+}
+
+/* Same motif in Rain, for use on top of an Arizona Red surface. */
+.halftone-dots-light {
+  background-image: radial-gradient(var(--color-rain) 41%, transparent 43%);
+  background-size: 13px 13px;
+  -webkit-mask-image: radial-gradient(120% 120% at 10% 100%, #000 0%, transparent 70%);
+  mask-image: radial-gradient(120% 120% at 10% 100%, #000 0%, transparent 70%);
+}
+
+/* 1.5px dotted rules — vertical in nav and logo strips, horizontal as breaks. */
+.rule-dotted-y {
+  border-left: 1.5px dotted var(--color-ink);
+}
+
+.rule-dotted-x {
+  border-top: 1.5px dotted var(--color-ink);
+}
+
+/* Scorer's ledger — box-score rows, not cards. Left-aligned, tabular figures,
+   one dotted rule between entries. Red appears only as the annotation ink. */
+.ledger-row {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.25rem 0;
+  border-top: 1.5px dotted var(--color-ink);
+}
+
+@media (min-width: 768px) {
+  .ledger-row {
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 2rem;
+  }
+}
+
+.ledger-figures {
+  font-family: var(--font-meta);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-muted);
+}
+
+.ledger-row .ledger-title {
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+}
+
+.ledger-row:hover .ledger-title,
+.ledger-row:focus-visible .ledger-title {
+  text-decoration: underline;
+  text-decoration-color: var(--color-arizona-red);
+}
+
+/* Field diagram — the single memorable figure. Chalk lines on Arizona Blue,
+   drawn with borders so it stays crisp at any size. */
+.field-frame {
+  border: 1.5px solid var(--color-chalk);
+}
+
+.field-frame-thin {
+  border: 1px solid color-mix(in srgb, var(--color-chalk) 65%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .ticker-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@theme inline {
+  /* shadcn utility names -> this site's own role tokens. */
+  --font-heading: var(--font-display);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/*
+  shadcn semantic tokens, bridged onto the Arizona role tokens above.
+  There is no dark mode on this site, so `.dark` mirrors the same palette
+  rather than inventing an inverted one.
+*/
+:root,
+.dark {
+  --background: var(--color-canvas);
+  --foreground: var(--color-ink);
+
+  --card: var(--color-surface);
+  --card-foreground: var(--color-ink);
+  --popover: var(--color-surface);
+  --popover-foreground: var(--color-ink);
+
+  --primary: var(--color-feature);
+  --primary-foreground: var(--color-chalk);
+  --secondary: var(--color-surface-muted);
+  --secondary-foreground: var(--color-ink);
+  --muted: var(--color-surface-muted);
+  --muted-foreground: var(--color-ink-muted);
+  --accent: var(--color-surface-muted);
+  --accent-foreground: var(--color-ink);
+
+  --destructive: var(--color-sonoran);
+  --border: var(--color-hairline);
+  --input: var(--color-hairline);
+  --ring: var(--color-arizona-red);
+
+  /* Chart series, in the order the D3 components ask for them. */
+  --chart-1: var(--color-arizona-red);
+  --chart-2: var(--color-azurite);
+  --chart-3: var(--color-arroyo);
+  --chart-4: var(--color-rain);
+  --chart-5: var(--color-saguaro);
+
+  /* --radius drives shadcn's radius scale; 20px puts radius-lg on this
+     site's medium radius and keeps radius-sm near the 16px small radius. */
+  --radius: 1.25rem;
+
+  --sidebar: var(--color-plasma);
+  --sidebar-foreground: var(--color-chalk);
+  --sidebar-primary: var(--color-feature);
+  --sidebar-primary-foreground: var(--color-chalk);
+  --sidebar-accent: var(--color-azurite);
+  --sidebar-accent-foreground: var(--color-chalk);
+  --sidebar-border: color-mix(in srgb, var(--color-chalk) 20%, transparent);
+  --sidebar-ring: var(--color-rain);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
 }

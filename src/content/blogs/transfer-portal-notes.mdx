@@ -1,0 +1,53 @@
+export const metadata = {
+  title: "What scraping the transfer portal taught us about college sports",
+  description:
+    "Five years of transfer announcements cleaned into one graph revealed a slower, stingier, more human market than the panic suggests.",
+  kind: "Article",
+  sport: "Multi-sport",
+  year: "2025",
+  authors: ["Nora Blackwell"],
+  featured: true,
+};
+
+The portal makes headlines as chaos — hundreds of players, portals crashing,
+offers made in group chats. We spent a winter turning five years of transfer
+announcements into one graph, and the chaos has a shape.
+
+The first surprise is silence at the center. Most movement is not the
+marquee-all-hands-forward dashboard drama; it is a quiet trickle of players
+moving down, not up. Roughly three quarters of tracked transfers went to a
+school at or below the prior school's competitive tier.
+
+The second is how concentrated the big money is. The number of programs that
+are *net buyers* — importing more than they export — is a short list, and it
+barely moved across five years:
+
+<DonutChart
+  title="Where five years of transfers went"
+  caption="Three quarters of the market is side-to-side and down-market movement. The top of the funnel is a small, stable club."
+  source="Public transfer data, 2020–2025"
+  data={[
+    { label: "Same tier", value: 38 },
+    { label: "Step down", value: 31 },
+    { label: "Step up", value: 8 },
+    { label: "FBS → lower D1", value: 14 },
+    { label: "FCS / D2 / D3 out", value: 9 },
+  ]}
+  unit="% of players"
+/>
+
+We built the dataset so someone could check the takes, not multiply them.
+Reading our own graph, three honest notes:
+
+- **The portal is not a transfer market; it's a second draft.** The name
+  sounds transactional; the data reads like a scouting cycle that got louder.
+- **Power programs skim, they don't poach the whole roster.** The transfer
+  volumes at the top are mostly depth plus one star per year.
+- **Eligibility flags matter.** Two datasets that count "announced" versus
+  "cleared" players tell different stories. Ours carries both.
+
+The cleaned graph is published and free. The takeaway for fans: every winter
+you will see the same panic in the replies. The numbers say the market turned
+over faster, got noisier to watch — and let most players do the same thing
+college athletes have always done, which is change teams and hope for
+something a little closer to home.
