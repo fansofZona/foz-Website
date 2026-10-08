@@ -55,3 +55,4 @@ All content is statically generated at build time:
 - Research: `src/content/research/`
 - Members: `src/content/members.ts`
 - Site config: `src/content/site.ts`
+# Deployment test Thu Oct  8 00:01:33 MST 2026
