@@ -3,7 +3,7 @@ export const site = {
   tagline: "Sports analytics, built by students.",
   blurb:
     "We're a student-run club that turns raw sport into evidence.",
-  email: "fansofzona@gmailcom",
+  email: "fansofzona@gmail.com",
   socials: [
     { label: "GitHub", href: "https://github.com" },
     { label: "X / Twitter", href: "https://x.com" },

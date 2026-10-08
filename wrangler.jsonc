@@ -1,22 +1,10 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "foz-website",
-  "main": ".open-next/worker.js",
-  "compatibility_date": "2026-10-06",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
-  "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
-  },
-  "services": [
-    {
-      "binding": "WORKER_SELF_REFERENCE",
-      "service": "foz-website"
-    }
-  ],
-  "observability": {
-    "enabled": true
+  "account_id": "",
+  "pages_build_output_dir": ".next",
+  "build": {
+    "command": "npm run build",
+    "cwd": "./"
   }
 }
