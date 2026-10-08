@@ -1,4 +1,5 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "foz-website"
+  "name": "foz-website",
+  "pages_build_output_dir": "out"
 }
