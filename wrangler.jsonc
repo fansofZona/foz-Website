@@ -1,10 +1,4 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "foz-website",
-  "account_id": "",
-  "pages_build_output_dir": ".next",
-  "build": {
-    "command": "npm run build",
-    "cwd": "./"
-  }
+  "name": "foz-website"
 }
