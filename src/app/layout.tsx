@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fira_Code } from "next/font/google";
+import { Source_Sans_3 } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { SiteNav } from "@/components/site-nav";
@@ -8,15 +8,11 @@ import { site } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 /*
-  Report + box score: a reading serif paired with a data mono.
+  Libron (display and headings) is a hand-tuned serif for headlines and
+  large display sizes. Carries the poster headlines with elegant proportions.
 
-  Libron (display and body) is a hand-tuned Readerly revision — large x-height,
-  open counters, tuned for sustained reading rather than a glance. It carries
-  both the poster headlines and the body copy; the two are separated by weight
-  (light at display sizes, bold at heading sizes), not by family.
-
-  Fira Code (meta) is a monospace with programming ligatures. It owns every
-  figure, axis label, and code block — the box-score half of the design.
+  Source Sans Pro (body and meta) is a clean, readable sans-serif for body
+  copy, figures, and metadata. Provides excellent readability on all sizes.
 */
 const libron = localFont({
   src: [
@@ -26,15 +22,15 @@ const libron = localFont({
     { path: "./fonts/libron/Libron-BoldItalic.woff2", weight: "700", style: "italic" },
   ],
   display: "swap",
-  // Serif fallback metrics, so the swap doesn't reflow the page.
   adjustFontFallback: "Times New Roman",
   variable: "--font-libron",
 });
 
-const firaCode = Fira_Code({
+const sourceSansPro = Source_Sans_3({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-fira-code",
+  variable: "--font-source-sans",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -52,7 +48,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={cn(libron.variable, firaCode.variable, "font-sans")}
+      className={cn(libron.variable, sourceSansPro.variable, "font-sans")}
     >
       <body className="flex min-h-screen flex-col bg-canvas text-ink">
         <SiteNav />

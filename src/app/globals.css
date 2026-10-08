@@ -37,14 +37,14 @@
   --color-hairline: #d8d3cb;                   /* 1.5px rules on canvas  */
 
   /* ---- Typography ---- */
-  /* Report + box score: Libron for prose, Fira Code for figures. Both stacks
-     are the same two families — display and body differ by weight, not by
-     typeface — so the serif fallback chain is shared. */
+  /* Libron for display/headlines, Source Sans Pro for body and meta.
+     Clean, modern hierarchy with excellent readability. */
   --font-display: var(--font-libron), "Iowan Old Style", "Palatino Linotype",
     Palatino, Georgia, ui-serif, serif;
-  --font-sans: var(--font-display);
-  --font-meta: var(--font-fira-code), ui-monospace, SFMono-Regular, Menlo,
-    Consolas, monospace;
+  --font-sans: var(--font-source-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, Arial, sans-serif;
+  --font-meta: var(--font-source-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, Arial, sans-serif;
 
   /*
     Scale — tightened for a student club site; heroes top out at 88px.
