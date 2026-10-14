@@ -1,7 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import * as d3 from "d3";
+import { scaleLinear } from "@visx/scale";
+import { Circle } from "@visx/shape";
+import { Group } from "@visx/group";
+import { AxisBottom, AxisLeft } from "@visx/axis";
+import { GridColumns, GridRows } from "@visx/grid";
+import { extent, mean, sum } from "d3-array";
+import { format } from "d3-format";
 import { ChartFrame, ChartTooltip } from "./frame";
 import {
   AXIS_STYLE,
@@ -22,11 +28,11 @@ export type ScatterPoint = {
 function trendLine(points: ScatterPoint[]) {
   const n = points.length;
   if (n < 2) return null;
-  const xMean = d3.mean(points, (p) => p.x) ?? 0;
-  const yMean = d3.mean(points, (p) => p.y) ?? 0;
-  const denom = d3.sum(points, (p) => (p.x - xMean) ** 2);
+  const xMean = mean(points, (p) => p.x) ?? 0;
+  const yMean = mean(points, (p) => p.y) ?? 0;
+  const denom = sum(points, (p) => (p.x - xMean) ** 2);
   if (!denom) return null;
-  const slope = d3.sum(points, (p) => (p.x - xMean) * (p.y - yMean)) / denom;
+  const slope = sum(points, (p) => (p.x - xMean) * (p.y - yMean)) / denom;
   const intercept = yMean - slope * xMean;
   return { slope, intercept };
 }
@@ -65,32 +71,36 @@ export function ScatterPlot({
     return Array.from(set) as string[];
   }, [points]);
 
-  const x = useMemo(() => {
-    const [lo, hi] = d3.extent(points, (p) => p.x as number);
-    const pad = hi === lo ? (Math.abs(lo ?? 0) || 1) * 0.1 : (hi! - lo!) * 0.06;
-    return d3
-      .scaleLinear()
-      .domain([(lo ?? 0) - pad, (hi ?? 1) + pad])
-      .range([0, innerW]);
+  const xScale = useMemo(() => {
+    const [lo, hi] = extent(points, (p) => p.x);
+    const pad =
+      hi === lo ? (Math.abs(lo ?? 0) || 1) * 0.1 : (hi! - lo!) * 0.06;
+    return scaleLinear<number>({
+      domain: [(lo ?? 0) - pad, (hi ?? 1) + pad],
+      range: [0, innerW],
+    });
   }, [points, innerW]);
 
-  const y = useMemo(() => {
-    const [lo, hi] = d3.extent(points, (p) => p.y as number);
-    const pad = hi === lo ? (Math.abs(lo ?? 0) || 1) * 0.1 : (hi! - lo!) * 0.06;
-    return d3
-      .scaleLinear()
-      .domain([(lo ?? 0) - pad, (hi ?? 1) + pad])
-      .range([innerH, 0]);
+  const yScale = useMemo(() => {
+    const [lo, hi] = extent(points, (p) => p.y);
+    const pad =
+      hi === lo ? (Math.abs(lo ?? 0) || 1) * 0.1 : (hi! - lo!) * 0.06;
+    return scaleLinear<number>({
+      domain: [(lo ?? 0) - pad, (hi ?? 1) + pad],
+      range: [innerH, 0],
+    });
   }, [points, innerH]);
 
   const fit = trend ? trendLine(points) : null;
+  const numFormat = useMemo(() => format(",.0f"), []);
+  const tooltipFormat = useMemo(() => format(",.2f"), []);
 
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const px = ((e.clientX - rect.left) / rect.width) * width - M.left;
     const py = ((e.clientY - rect.top) / rect.height) * height - M.top;
-    const xv = x.invert(Math.max(0, Math.min(innerW, px)));
-    const yv = y.invert(Math.max(0, Math.min(innerH, py)));
+    const xv = xScale.invert(Math.max(0, Math.min(innerW, px)));
+    const yv = yScale.invert(Math.max(0, Math.min(innerH, py)));
     let best = -1;
     let bestD = Infinity;
     points.forEach((p, i) => {
@@ -106,6 +116,8 @@ export function ScatterPlot({
   const hovered = active === null ? null : points[active];
 
   if (points.length === 0) return null;
+
+  const xDomain = xScale.domain();
 
   return (
     <ChartFrame title={title} caption={caption} source={source}>
@@ -134,38 +146,30 @@ export function ScatterPlot({
           onPointerMove={onMove}
           onPointerLeave={() => setActive(null)}
         >
-          <g transform={`translate(${M.left},${M.top})`}>
-            {y.ticks(5).map((t) => (
-              <line
-                key={t}
-                x1="0"
-                x2={innerW}
-                y1={y(t)}
-                y2={y(t)}
-                stroke={GRID.hairline}
-                strokeWidth="1"
-                strokeDasharray="3 4"
-              />
-            ))}
-            {x.ticks(6).map((t) => (
-              <line
-                key={t}
-                x1={x(t)}
-                x2={x(t)}
-                y1="0"
-                y2={innerH}
-                stroke={GRID.hairline}
-                strokeWidth="1"
-                strokeDasharray="3 4"
-              />
-            ))}
+          <Group left={M.left} top={M.top}>
+            <GridRows
+              scale={yScale}
+              width={innerW}
+              numTicks={5}
+              stroke={GRID.hairline}
+              strokeWidth={1}
+              strokeDasharray="3 4"
+            />
+            <GridColumns
+              scale={xScale}
+              height={innerH}
+              numTicks={6}
+              stroke={GRID.hairline}
+              strokeWidth={1}
+              strokeDasharray="3 4"
+            />
 
             {fit ? (
               <line
                 x1="0"
-                y1={y(fit.slope * x.domain()[0] + fit.intercept)}
+                y1={yScale(fit.slope * xDomain[0] + fit.intercept)}
                 x2={innerW}
-                y2={y(fit.slope * x.domain()[1] + fit.intercept)}
+                y2={yScale(fit.slope * xDomain[1] + fit.intercept)}
                 stroke={colorHex}
                 strokeWidth="2"
                 strokeDasharray="7 5"
@@ -176,10 +180,10 @@ export function ScatterPlot({
               const gIdx = p.group ? groups.indexOf(p.group) : -1;
               const lit = i === active;
               return (
-                <circle
+                <Circle
                   key={i}
-                  cx={x(p.x)}
-                  cy={y(p.y)}
+                  cx={xScale(p.x)}
+                  cy={yScale(p.y)}
                   r={lit ? 6 : 4}
                   fill={gIdx >= 0 ? colorFor(gIdx + 1, color) : colorHex}
                   fillOpacity={lit ? 1 : 0.65}
@@ -190,30 +194,35 @@ export function ScatterPlot({
               );
             })}
 
-            {y.ticks(5).map((t) => (
-              <text
-                key={`y-${t}`}
-                x={-10}
-                y={y(t)}
-                textAnchor="end"
-                dominantBaseline="central"
-                style={AXIS_STYLE}
-              >
-                {d3.format(",.0f")(t)}
-              </text>
-            ))}
-            {x.ticks(6).map((t) => (
-              <text
-                key={`x-${t}`}
-                x={x(t)}
-                y={innerH + 24}
-                textAnchor="middle"
-                style={AXIS_STYLE}
-              >
-                {d3.format(",.0f")(t)}
-              </text>
-            ))}
-          </g>
+            <AxisLeft
+              scale={yScale}
+              numTicks={5}
+              hideAxisLine
+              hideTicks
+              tickFormat={(v) => numFormat(Number(v))}
+              tickLabelProps={() => ({
+                ...AXIS_STYLE,
+                textAnchor: "end",
+                dx: "-0.6em",
+                dy: "0.32em",
+              })}
+              stroke="transparent"
+            />
+            <AxisBottom
+              top={innerH}
+              scale={xScale}
+              numTicks={6}
+              hideAxisLine
+              hideTicks
+              tickFormat={(v) => numFormat(Number(v))}
+              tickLabelProps={() => ({
+                ...AXIS_STYLE,
+                textAnchor: "middle",
+                dy: "0.6em",
+              })}
+              stroke="transparent"
+            />
+          </Group>
 
           {xLabel ? (
             <text x={width / 2} y={height - 4} textAnchor="middle" style={AXIS_STYLE}>
@@ -232,8 +241,8 @@ export function ScatterPlot({
             <ChartTooltip
               label={hovered.label ?? hovered.group ?? "Point"}
               rows={[
-                { name: xLabel ?? "x", value: d3.format(",.2f")(hovered.x), color: colorHex },
-                { name: yLabel ?? "y", value: d3.format(",.2f")(hovered.y), color: colorHex },
+                { name: xLabel ?? "x", value: tooltipFormat(hovered.x), color: colorHex },
+                { name: yLabel ?? "y", value: tooltipFormat(hovered.y), color: colorHex },
               ]}
             />
           </div>

@@ -5,15 +5,16 @@ This design system is built on principles inspired by **Astryx** (Meta's design 
 ## Typography
 
 ### Font Stack
-- **Display/Headlines**: Libron (custom serif font)
-  - Large x-height, open counters
-  - Used for posters, headings, and hero text
-  - Weights: 400 (light), 700 (bold)
+- **Display/Headlines/Body**: Luciole (https://luciole-vision.com/en/math.html)
+  - Typeface developed explicitly for visually impaired readers
+  - Large x-height, open counters, highly differentiated figures (1/l/I, 0/O)
+  - Used for posters, headings, hero text, body copy, and navigation
+  - Weights: 400 (Regular + Italic), 700 (Bold + BoldItalic)
 
-- **Body/Meta**: Source Sans Pro (Google Fonts)
-  - Clean, readable sans-serif
-  - Used for body copy, navigation, metadata, and figures
-  - Weights: 400, 500, 600, 700
+- **Meta/Figures**: Luciole Math
+  - 3,000+ characters, Unicode + AMS-compliant for equations
+  - Used for stats, ledger figures, tabular numbers, xT and scientific symbols
+  - Weight: 400, with tabular figures throughout
 
 ### Type Scale
 ```

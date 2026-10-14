@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import * as d3 from "d3";
+import { useMemo, useState } from "react";
+import { Group } from "@visx/group";
+import { arc, pie } from "@visx/shape";
+import { sum } from "d3-array";
+import { format } from "d3-format";
 import { ChartFrame } from "./frame";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,15 +40,18 @@ export function DonutChart({
   color?: ChartColor;
 }) {
   const [active, setActive] = useState<number | null>(null);
-  const total = d3.sum(data, (d) => d.value) || 1;
+  const total = sum(data, (d) => d.value) || 1;
 
-  const pie = d3
-    .pie<DonutDatum>()
-    .sort(null)
-    .value((d) => d.value);
-  const arcs = pie(data);
+  const arcs = useMemo(() => {
+    const pieLayout = pie<DonutDatum>()
+      .sort(null)
+      .value((d) => d.value);
+    return pieLayout(data);
+  }, [data]);
 
-  const formatPct = d3.format(".1%");
+  const formatPct = useMemo(() => format(".1%"), []);
+  const formatTotal = useMemo(() => format(",.0f"), []);
+  const formatShort = useMemo(() => format(",.2s"), []);
 
   const hovered = active === null ? null : arcs[active];
 
@@ -59,17 +65,18 @@ export function DonutChart({
       >
         <div className="relative w-full max-w-[420px] flex-1">
           <svg viewBox={`0 0 ${W} ${height}`} className="h-auto w-full">
-            <g transform={`translate(${CX},${CY})`}>
+            <Group left={CX} top={CY}>
               {arcs.map((a, i) => {
                 const lit = i === active;
-                const d = d3
-                  .arc<d3.PieArcDatum<DonutDatum>>()
+                const path = arc()
                   .innerRadius(R - 46)
-                  .outerRadius(lit ? R + 10 : R);
+                  .outerRadius(lit ? R + 10 : R)(
+                  a as Parameters<ReturnType<typeof arc>>[0],
+                );
                 return (
                   <path
                     key={a.data.label}
-                    d={d(a) ?? undefined}
+                    d={path ?? undefined}
                     fill={colorFor(i, color)}
                     fillOpacity={lit ? 1 : 0.7}
                     stroke="var(--color-canvas)"
@@ -93,7 +100,7 @@ export function DonutChart({
               >
                 {hovered
                   ? formatPct(hovered.data.value / total)
-                  : `n = ${d3.format(",.0f")(total)}`}
+                  : `n = ${formatTotal(total)}`}
               </text>
               <text
                 x="0"
@@ -106,9 +113,9 @@ export function DonutChart({
                   fill: GRID.axis,
                 }}
               >
-                {hovered ? d3.format(",.2s")(hovered.data.value) : "total"}
+                {hovered ? formatShort(hovered.data.value) : "total"}
               </text>
-            </g>
+            </Group>
           </svg>
         </div>
 
@@ -132,7 +139,7 @@ export function DonutChart({
                   />
                   <span className="flex-1 text-body text-ink">{a.data.label}</span>
                   <span className="font-meta text-body-sm text-ink-muted">
-                    {d3.format(",.2s")(value)}
+                    {formatShort(value)}
                     {unit ? ` ${unit}` : ""}
                   </span>
                   <span className="w-12 text-right font-meta text-caption text-ink-muted">

@@ -1,7 +1,12 @@
 "use client";
 
 import { useId, useMemo, useState } from "react";
-import * as d3 from "d3";
+import { scaleLinear } from "@visx/scale";
+import { Area, LinePath } from "@visx/shape";
+import { Group } from "@visx/group";
+import { AxisBottom, AxisLeft } from "@visx/axis";
+import { GridRows } from "@visx/grid";
+import { format } from "d3-format";
 import { ChartFrame, ChartTooltip } from "./frame";
 import {
   AXIS_STYLE,
@@ -21,6 +26,16 @@ export type LineSeries = {
 };
 
 const M = { top: 24, right: 24, bottom: 44, left: 56 };
+
+const tickLabel = {
+  ...AXIS_STYLE,
+  textAnchor: "middle",
+} as const;
+
+const tickLabelLeft = {
+  ...AXIS_STYLE,
+  textAnchor: "end",
+} as const;
 
 export function LineChart({
   series,
@@ -52,10 +67,7 @@ export function LineChart({
   const allPoints = useMemo(() => series.flatMap((s) => s.points), [series]);
 
   const categories = useMemo(
-    () =>
-      Array.from(
-        new Set(allPoints.map((p) => String(p.x))),
-      ),
+    () => Array.from(new Set(allPoints.map((p) => String(p.x)))),
     [allPoints],
   );
 
@@ -86,61 +98,48 @@ export function LineChart({
       ? [minY * 1.08, Math.max(maxY * 1.08, 1)]
       : [0, Math.max(maxY * 1.08, 1e-9)];
 
-  const yFormat = useMemo(
-    () =>
-      Math.abs(maxY) < 1
-        ? d3.format(".3f")
-        : Math.abs(maxY) < 100
-          ? d3.format(".1f")
-          : d3.format(",.0f"),
-    [maxY],
-  );
+  const yFormat = useMemo(() => {
+    if (Math.abs(maxY) < 1) return format(".3f");
+    if (Math.abs(maxY) < 100) return format(".1f");
+    return format(",.0f");
+  }, [maxY]);
 
-  const x = useMemo(() => {
+  const xScale = useMemo(() => {
     if (numeric) {
       const pad =
-        maxX === minX
-          ? (Math.abs(maxX) || 1) * 0.1
-          : (maxX - minX) * 0.03;
-      return d3
-        .scaleLinear()
-        .domain([minX - pad, maxX + pad])
-        .range([0, innerW]);
+        maxX === minX ? (Math.abs(maxX) || 1) * 0.1 : (maxX - minX) * 0.03;
+      return scaleLinear<number>({
+        domain: [minX - pad, maxX + pad],
+        range: [0, innerW],
+      });
     }
-    return d3
-      .scaleLinear()
-      .domain([0, Math.max(categories.length - 1, 0)])
-      .range([0, innerW]);
+    return scaleLinear<number>({
+      domain: [0, Math.max(categories.length - 1, 0)],
+      range: [0, innerW],
+    });
   }, [numeric, minX, maxX, categories, innerW]);
 
-  const y = d3.scaleLinear().domain(yDomain).range([innerH, 0]).nice();
-  const yTicks = y.ticks(5);
+  const yScale = useMemo(
+    () =>
+      scaleLinear<number>({
+        domain: yDomain,
+        range: [innerH, 0],
+        nice: true,
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [yDomain[0], yDomain[1], innerH],
+  );
 
   const pos = (p: LinePoint): number => {
-    if (numeric) return x(p.x as number);
-    return x(catIndex.get(String(p.x)) ?? 0);
+    if (numeric) return xScale(p.x as number);
+    return xScale(catIndex.get(String(p.x)) ?? 0);
   };
-
-  const line = d3
-    .line<LinePoint>()
-    .x(pos)
-    .y((p) => y(p.y))
-    .defined((p) => Number.isFinite(p.y));
-
-  const area = !numeric
-    ? d3
-        .area<LinePoint>()
-        .x(pos)
-        .y0(innerH)
-        .y1((p) => y(p.y))
-        .defined((p) => Number.isFinite(p.y))
-    : null;
 
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const px = ((e.clientX - rect.left) / rect.width) * width - M.left;
     if (numeric) {
-      const v = x.invert(Math.max(0, Math.min(innerW, px)));
+      const v = xScale.invert(Math.max(0, Math.min(innerW, px)));
       let bestIdx = -1;
       let bestD = Infinity;
       allPoints.forEach((p, i) => {
@@ -152,7 +151,7 @@ export function LineChart({
       });
       setActive(bestIdx);
     } else {
-      const idx = Math.round(x.invert(Math.max(0, Math.min(innerW, px))));
+      const idx = Math.round(xScale.invert(Math.max(0, Math.min(innerW, px))));
       setActive(Math.max(0, Math.min(categories.length - 1, idx)));
     }
   };
@@ -161,7 +160,7 @@ export function LineChart({
     if (active === null || active < 0) return null;
     const label = numeric ? String(allPoints[active]?.x) : categories[active];
     if (!label) return null;
-    const px = numeric ? x(Number(label)) : x(catIndex.get(label) ?? 0);
+    const px = numeric ? xScale(Number(label)) : xScale(catIndex.get(label) ?? 0);
     const rows = series.map((s, si) => {
       const hit = numeric
         ? s.points.find((p) => p.x === allPoints[active]?.x)
@@ -173,13 +172,13 @@ export function LineChart({
       };
     });
     return { label, x: px, rows };
-  }, [active, numeric, categories, series, allPoints, catIndex, x, yFormat]);
+  }, [active, numeric, categories, series, allPoints, catIndex, xScale, yFormat]);
 
   if (series.length === 0 || allPoints.length === 0) return null;
 
-  const xTickValues = numeric ? x.ticks(6) : categories.map((_, i) => i);
-  const xTickLabel = (v: number) =>
-    numeric ? String(v) : categories[Math.round(v)] ?? "";
+  const xTickValues = numeric ? undefined : categories.map((_, i) => i);
+  const xTickFormat = (v: number) =>
+    numeric ? String(v) : (categories[Math.round(v)] ?? "");
 
   return (
     <ChartFrame title={title} caption={caption} source={source}>
@@ -214,40 +213,41 @@ export function LineChart({
             </clipPath>
           </defs>
 
-          <g transform={`translate(${M.left},${M.top})`}>
-            {yTicks.map((t) => (
-              <line
-                key={t}
-                x1="0"
-                x2={innerW}
-                y1={y(t)}
-                y2={y(t)}
-                stroke={GRID.hairline}
-                strokeWidth="1"
-                strokeDasharray="3 4"
+          <Group left={M.left} top={M.top}>
+            <GridRows
+              scale={yScale}
+              width={innerW}
+              numTicks={5}
+              stroke={GRID.hairline}
+              strokeWidth={1}
+              strokeDasharray="3 4"
+            />
+
+            {!numeric && series.length === 1 ? (
+              <Area<LinePoint>
+                data={series[0].points.filter((p) => Number.isFinite(p.y))}
+                x={(p) => pos(p)}
+                y0={innerH}
+                y1={(p) => yScale(p.y)}
+                fill={colorFor(0)}
+                opacity={0.08}
               />
-            ))}
+            ) : null}
 
             {series.map((s, si) => (
-              <path
+              <LinePath<LinePoint>
                 key={s.name}
-                d={line(s.points) ?? undefined}
-                fill="none"
+                data={s.points}
+                defined={(p) => Number.isFinite(p.y)}
+                x={(p) => pos(p)}
+                y={(p) => yScale(p.y)}
                 stroke={colorFor(si, s.color)}
-                strokeWidth="2.5"
+                strokeWidth={2.5}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeDasharray={s.dashed ? "6 5" : undefined}
               />
             ))}
-
-            {area && series.length === 1 ? (
-              <path
-                d={area(series[0].points) ?? undefined}
-                fill={colorFor(0)}
-                opacity="0.08"
-              />
-            ) : null}
 
             {hover ? (
               <line
@@ -270,7 +270,7 @@ export function LineChart({
                     <circle
                       key={`${s.name}-${pi}`}
                       cx={px}
-                      cy={y(p.y)}
+                      cy={yScale(p.y)}
                       r={lit ? 5 : 3}
                       fill={colorFor(si, s.color)}
                       stroke={lit ? GRID.axis : "none"}
@@ -282,31 +282,27 @@ export function LineChart({
               )}
             </g>
 
-            {yTicks.map((t) => (
-              <text
-                key={`y-${t}`}
-                x={-10}
-                y={y(t)}
-                textAnchor="end"
-                dominantBaseline="central"
-                style={AXIS_STYLE}
-              >
-                {yFormat(t)}
-              </text>
-            ))}
-
-            {xTickValues.map((v) => (
-              <text
-                key={`x-${v}`}
-                x={x(v)}
-                y={innerH + 26}
-                textAnchor="middle"
-                style={AXIS_STYLE}
-              >
-                {xTickLabel(v)}
-              </text>
-            ))}
-          </g>
+            <AxisLeft
+              scale={yScale}
+              numTicks={5}
+              hideAxisLine
+              hideTicks
+              tickFormat={(v) => yFormat(Number(v))}
+              tickLabelProps={() => tickLabelLeft}
+              stroke="transparent"
+            />
+            <AxisBottom
+              top={innerH}
+              scale={xScale}
+              numTicks={numeric ? 6 : categories.length}
+              tickValues={xTickValues}
+              tickFormat={(v) => xTickFormat(Number(v))}
+              hideAxisLine
+              hideTicks
+              tickLabelProps={() => tickLabel}
+              stroke="transparent"
+            />
+          </Group>
 
           {xLabel ? (
             <text

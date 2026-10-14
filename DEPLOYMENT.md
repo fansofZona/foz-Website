@@ -44,7 +44,7 @@ Runs at `http://localhost:3000` with live hot reloading.
 - `.open-next/` - Open-next build (AWS Lambda compatible, not needed for Pages)
 
 ## Fonts and Assets
-- Custom Libron font files in `src/app/fonts/libron/`
+- Luciole + Luciole Math in `src/app/fonts/luciole/` (https://luciole-vision.com/en/math.html)
 - Logo and member images in `public/`
 - All fonts and images are included in the build
 

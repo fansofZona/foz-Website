@@ -1,7 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import * as d3 from "d3";
+import { scaleBand, scaleLinear } from "@visx/scale";
+import { Bar } from "@visx/shape";
+import { Group } from "@visx/group";
+import { AxisBottom, AxisLeft } from "@visx/axis";
+import { GridRows } from "@visx/grid";
+import { max, min } from "d3-array";
+import { format } from "d3-format";
 import { ChartFrame, ChartTooltip } from "./frame";
 import {
   AXIS_STYLE,
@@ -50,38 +56,47 @@ export function BarChart({
     return copy;
   }, [data, sort]);
 
-  if (ordered.length === 0) return null;
-
-  const values = ordered.map((d) => d.value);
-  const maxV = d3.max(values) ?? 0;
-  const minV = d3.min(values) ?? 0;
+  const values = useMemo(() => ordered.map((d) => d.value), [ordered]);
+  const maxV = max(values) ?? 0;
+  const minV = min(values) ?? 0;
   const colorHex = colorFor(0, color);
 
   const innerW = width - M.left - M.right;
   const innerH = height - M.top - M.bottom;
 
-  const y = d3
-    .scaleLinear()
-    .domain(
-      minV < 0
-        ? [minV * 1.1, Math.max(maxV * 1.08, 1)]
-        : [0, Math.max(maxV * 1.08, 1)],
-    )
-    .range([innerH, 0])
-    .nice();
+  const yScale = useMemo(
+    () =>
+      scaleLinear<number>({
+        domain:
+          minV < 0
+            ? [minV * 1.1, Math.max(maxV * 1.08, 1)]
+            : [0, Math.max(maxV * 1.08, 1)],
+        range: [innerH, 0],
+        nice: true,
+      }),
+    [minV, maxV, innerH],
+  );
 
-  const zero = y(0);
-  const band = d3
-    .scaleBand()
-    .domain(ordered.map((d) => d.label))
-    .range([0, innerW])
-    .padding(0.3);
-  const yTicks = y.ticks(5);
+  const xScale = useMemo(
+    () =>
+      scaleBand<string>({
+        domain: ordered.map((d) => d.label),
+        range: [0, innerW],
+        padding: 0.3,
+      }),
+    [ordered, innerW],
+  );
 
-  const tickFormat =
-    Math.max(Math.abs(minV), Math.abs(maxV)) < 10
-      ? d3.format(",.1f")
-      : d3.format("+,.0f");
+  const tickFormat = useMemo(() => {
+    const span = Math.max(Math.abs(minV), Math.abs(maxV));
+    return span < 10 ? format(",.1f") : format("+,.0f");
+  }, [minV, maxV]);
+  const barLabelFormat = useMemo(() => format(",.2s"), []);
+  const tooltipFormat = useMemo(() => format(",.3s"), []);
+
+  if (ordered.length === 0) return null;
+
+  const zero = yScale(0);
 
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -101,19 +116,15 @@ export function BarChart({
           onPointerMove={onMove}
           onPointerLeave={() => setActive(null)}
         >
-          <g transform={`translate(${M.left},${M.top})`}>
-            {yTicks.map((t) => (
-              <line
-                key={t}
-                x1="0"
-                x2={innerW}
-                y1={y(t)}
-                y2={y(t)}
-                stroke={GRID.hairline}
-                strokeWidth="1"
-                strokeDasharray="3 4"
-              />
-            ))}
+          <Group left={M.left} top={M.top}>
+            <GridRows
+              scale={yScale}
+              width={innerW}
+              numTicks={5}
+              stroke={GRID.hairline}
+              strokeWidth={1}
+              strokeDasharray="3 4"
+            />
 
             <line
               x1="0"
@@ -125,14 +136,14 @@ export function BarChart({
             />
 
             {ordered.map((d, i) => {
-              const bw = band.bandwidth();
-              const bx = band(d.label) ?? 0;
-              const top = y(Math.max(d.value, 0));
-              const bottom = y(Math.min(d.value, 0));
+              const bw = xScale.bandwidth();
+              const bx = xScale(d.label) ?? 0;
+              const top = yScale(Math.max(d.value, 0));
+              const bottom = yScale(Math.min(d.value, 0));
               const isActive = i === active;
               return (
                 <g key={d.label}>
-                  <rect
+                  <Bar
                     x={bx}
                     y={top}
                     width={bw}
@@ -152,33 +163,39 @@ export function BarChart({
                       fill: isActive ? GRID.axis : GRID.label,
                     }}
                   >
-                    {d3.format(",.2s")(d.value)}
-                  </text>
-                  <text
-                    x={bx + bw / 2}
-                    y={innerH + 20}
-                    textAnchor="middle"
-                    style={AXIS_STYLE}
-                  >
-                    {d.label}
+                    {barLabelFormat(d.value)}
                   </text>
                 </g>
               );
             })}
 
-            {yTicks.map((t) => (
-              <text
-                key={`tick-${t}`}
-                x={-10}
-                y={y(t)}
-                textAnchor="end"
-                dominantBaseline="central"
-                style={AXIS_STYLE}
-              >
-                {tickFormat(t)}
-              </text>
-            ))}
-          </g>
+            <AxisLeft
+              scale={yScale}
+              numTicks={5}
+              hideAxisLine
+              hideTicks
+              tickFormat={(v) => tickFormat(Number(v))}
+              tickLabelProps={() => ({
+                ...AXIS_STYLE,
+                textAnchor: "end",
+                dx: "-0.6em",
+                dy: "0.32em",
+              })}
+              stroke="transparent"
+            />
+            <AxisBottom
+              top={innerH}
+              scale={xScale}
+              hideAxisLine
+              hideTicks
+              tickLabelProps={() => ({
+                ...AXIS_STYLE,
+                textAnchor: "middle",
+                dy: "0.6em",
+              })}
+              stroke="transparent"
+            />
+          </Group>
 
           {xLabel ? (
             <text
@@ -199,7 +216,7 @@ export function BarChart({
               rows={[
                 {
                   name: yLabel ?? "Value",
-                  value: `${d3.format(",.3s")(hovered.value)}${unit ? ` ${unit}` : ""}`,
+                  value: `${tooltipFormat(hovered.value)}${unit ? ` ${unit}` : ""}`,
                   color: colorHex,
                 },
               ]}
