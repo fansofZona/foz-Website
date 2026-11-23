@@ -16,9 +16,9 @@ export default function BlogsPage() {
     <>
       <section className="pt-8 sm:pt-12">
         <Shell>
-          <p className="text-body-sm text-ink-muted">Field Notes</p>
+
           <h1 className="display-xl mt-4 max-w-[14ch] text-heading-3xl text-ink">
-            Short takes on data and method
+            Field notes on data and method
           </h1>
           <p className="mt-6 max-w-[60ch] text-body-lg text-ink-muted">
             Opinionated posts on the tools we use, the patterns we notice, and the questions that refuse to stay closed.

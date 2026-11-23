@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { DottedDivider, Shell, Tag } from "@/components/primitives";
 import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 import type { PostRecord } from "@/content/posts";
 
 export function BlogIndex({ posts }: { posts: PostRecord[] }) {
@@ -23,7 +22,7 @@ export function BlogIndex({ posts }: { posts: PostRecord[] }) {
       <Shell>
         {/* Featured post — full width hero */}
         <article className="mb-12">
-          <Card className="gap-0 overflow-hidden rounded-card bg-surface ring-0">
+          <Card className="gap-0 overflow-hidden rounded-card bg-surface ring-0 blog-feature">
             <Link
               href={featured.meta.href}
               className="group flex flex-col focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink lg:flex-row"
@@ -56,7 +55,7 @@ export function BlogIndex({ posts }: { posts: PostRecord[] }) {
                   )}
                 </div>
               </div>
-              <div className="h-48 w-full flex-shrink-0 bg-surface-muted lg:h-auto lg:w-80" />
+
             </Link>
           </Card>
         </article>
@@ -72,12 +71,12 @@ export function BlogIndex({ posts }: { posts: PostRecord[] }) {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {remaining.map((post) => (
                 <article key={post.slug}>
-                  <Card className="group h-full gap-0 overflow-hidden rounded-card bg-surface ring-0 transition-transform hover:-translate-y-1">
+                  <Card className="group h-full gap-0 overflow-hidden rounded-card bg-surface ring-0 blog-feature ">
                     <Link
                       href={post.meta.href}
                       className="flex flex-col rounded-card focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
                     >
-                      <div className="h-40 w-full flex-shrink-0 bg-surface-muted" />
+
                       <div className="flex flex-1 flex-col justify-between p-5">
                         <div>
                           <div className="flex flex-wrap gap-1.5">

@@ -1,0 +1,23 @@
+@font-face{font-family:Geist;src:url('./fonts/geist-regular.woff2') format('woff2');font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:Geist;src:url('./fonts/geist-medium.woff2') format('woff2');font-style:normal;font-weight:500;font-display:swap}
+@font-face{font-family:'Geist Serif';src:url('./fonts/geist-serif-regular.woff2') format('woff2');font-style:normal;font-weight:400;font-display:swap}
+:root{
+  --foz-white:#FFFFFF;
+  --foz-navy:#0C234B;
+  --foz-red:#AB0520;
+  --foz-rule:rgb(12 35 75 / 18%);
+  --foz-muted:rgb(12 35 75 / 78%);
+  --foz-serif:'Geist Serif',serif;
+  --foz-sans:Geist,sans-serif;
+  --foz-display:clamp(2.5rem,5.5vw,5.25rem);
+  --foz-heading:clamp(2rem,3.5vw,3rem);
+  --foz-body:1.125rem;
+  --foz-leading:1.65;
+  --foz-space-1:8px;
+  --foz-space-2:16px;
+  --foz-space-3:24px;
+  --foz-space-4:40px;
+  --foz-space-5:64px;
+  --foz-space-6:96px;
+  --foz-content:1200px;
+}

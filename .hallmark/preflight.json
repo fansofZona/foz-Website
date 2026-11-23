@@ -1,0 +1,14 @@
+{
+  "scanned": "2026-11-04",
+  "findings": {
+    "fonts": "src/app/layout.tsx:20 local Luciole; Luciole Math at line 31",
+    "palette": "DESIGN_SYSTEM.md:45 Arizona brand palette; original src/app/globals.css:9",
+    "framework": "package.json:30 Next.js 16.3.5, React 19, Tailwind 4, MDX",
+    "motion": "Original globals.css ticker; removed automatic motion in redesign",
+    "spacing": "1280px centered container; 4px spacing scale",
+    "routes": ["/", "/projects", "/projects/[slug]", "/blogs", "/blogs/[slug]", "/research", "/research/[slug]", "/about", "/about/members/[slug]"],
+    "existing_change": "wrangler.jsonc left untouched"
+  },
+  "preserve": ["Arizona brand", "Luciole", "all routes and source content", "member assets", "filter and mailto handlers"],
+  "introduce": ["publication index", "sourced research chart", "ruled masthead", "shared design tokens", "responsive filter wrapping"]
+}

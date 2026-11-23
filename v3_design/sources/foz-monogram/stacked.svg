@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="224" viewBox="0 0 440 224" role="img" aria-labelledby="title desc">
+<title id="title">FANS of Zona — FoZ Monogram, stacked</title>
+<desc id="desc">Editable lettering master; requires the bundled Geist fonts.</desc>
+<g transform="translate(156 4)"><defs><mask id="o-counter" maskUnits="userSpaceOnUse" x="0" y="0" width="128" height="128"><rect width="128" height="128" fill="white"/><circle cx="65" cy="64" r="9" fill="black"/></mask></defs><g fill="#0C234B" mask="url(#o-counter)"><path d="M16 20H62V34H30V57H62V71H30V108H16Z"/><path d="M68 20H112V34L80 94H112V108H60V94L92 34H68Z"/><circle cx="65" cy="64" r="18"/></g></g><text x="68.47399999999999" y="193" fill="#0C234B" font-family="Geist" font-weight="500" font-size="48" letter-spacing="-0.7">FANS of Zona</text>
+</svg>

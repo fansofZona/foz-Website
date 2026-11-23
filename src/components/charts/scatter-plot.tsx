@@ -141,6 +141,8 @@ export function ScatterPlot({
 
       <div className="relative">
         <svg
+          role="img"
+          aria-label={title ?? "Sports analytics chart"}
           viewBox={`0 0 ${width} ${height}`}
           className="h-auto w-full"
           onPointerMove={onMove}

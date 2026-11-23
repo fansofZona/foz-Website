@@ -1,0 +1,114 @@
+@theme {
+  /* ---- University of Arizona brand palette ---- */
+  /* Primary */
+  --color-arizona-red: #ab0520;
+  --color-arizona-blue: #0c234b;
+  /* Secondary */
+  --color-tinta: #03132e;
+  --color-azurite: #1e5288;
+  --color-arroyo: #106ab1;
+  --color-rain: #81ceeb;
+  --color-sonoran: #850000;
+  --color-bougainvillea: #c62840;
+  /* Accent — never used for text */
+  --color-saguaro: #7f8b5a;
+  --color-shade: #3f7a7a;
+  --color-brick: #85372b;
+  /* Neutral */
+  --color-cloud: #e5eff7;
+  --color-caliche: #f2efea;
+  --color-chalk: #fcfcfa;
+
+  /* ---- Role aliases (the Caldera roles, mapped onto Arizona) ---- */
+  --color-canvas: var(--color-caliche);        /* page background        */
+  --color-surface: var(--color-chalk);         /* cards, content blocks  */
+  --color-surface-muted: var(--color-cloud);   /* secondary fills        */
+  --color-feature: var(--color-arizona-red);   /* the one loud surface   */
+  --color-plasma: var(--color-arizona-blue);   /* halftone / hero block  */
+  --color-tag: var(--color-rain);              /* category badges        */
+  --color-ink: var(--color-tinta);             /* headings + body text   */
+  --color-ink-muted: #4d5a6d;                  /* supporting copy, 6.1:1 */
+  --color-hairline: #d8d3cb;                   /* 1.5px rules on canvas  */
+
+  /* ---- Typography ---- */
+  /* Luciole for everything — https://luciole-vision.com/en/math.html
+     Designed for visually impaired readers. Luciole Math for figures. */
+  --font-display: var(--font-luciole), "Atkinson Hyperlegible", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-sans: var(--font-luciole), "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, Arial, sans-serif;
+  --font-meta: var(--font-luciole-math), var(--font-luciole), "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, Arial, sans-serif;
+
+  /*
+    Scale — tightened for a student club site; heroes top out at 88px.
+
+    The three small steps are pinned to Tailwind's xs/sm/base slots so that
+    shadcn components, which ship `text-xs` / `text-sm` / `text-base`, land on
+    this site's sizes instead of fighting them with overrides.
+  */
+  --text-xs: 12px;
+  --text-xs--line-height: 1.4;
+
+  --text-sm: 14px;
+  --text-sm--line-height: 1.5;
+
+  --text-base: 16px;
+  --text-base--line-height: 1.6;
+
+  --text-caption: 12px;
+  --text-caption--line-height: 1.4;
+
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 1.5;
+
+  --text-body: 16px;
+  --text-body--line-height: 1.6;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 1.6;
+
+  --text-subheading: 20px;
+  --text-subheading--line-height: 1.3;
+
+  --text-heading-sm: 24px;
+  --text-heading-sm--line-height: 1.25;
+
+  --text-heading: clamp(24px, 3vw, 30px);
+  --text-heading--line-height: 1.05;
+
+  --text-heading-lg: clamp(28px, 4vw, 44px);
+  --text-heading-lg--line-height: 1.02;
+
+  --text-heading-2xl: clamp(32px, 5vw, 56px);
+  --text-heading-2xl--line-height: 1;
+  --text-heading-2xl--letter-spacing: 0.01em;
+
+  --text-heading-3xl: clamp(36px, 6vw, 68px);
+  --text-heading-3xl--line-height: 0.98;
+  --text-heading-3xl--letter-spacing: 0.01em;
+
+  --text-display: clamp(44px, 8vw, 88px);
+  --text-display--line-height: 0.96;
+  --text-display--letter-spacing: 0.01em;
+
+  /* ---- Radii — the triple-radius system ---- */
+  --radius-small: 2px;
+  --radius-medium: 4px;
+  --radius-card: 4px;
+  --radius-button: 40px;
+  --radius-input: 4px;
+  --radius-pill: 4px;
+}
+
+:root {
+ --color-paper: var(--color-canvas); --color-paper-2: var(--color-surface); --color-paper-3: var(--color-surface-muted);
+ --color-ink-2: var(--color-ink-muted); --color-muted: var(--color-ink-muted); --color-rule: var(--color-hairline);
+ --color-accent: var(--color-feature); --color-accent-ink: var(--color-chalk); --color-focus: var(--color-feature);
+ --color-overlay: color-mix(in srgb, var(--color-ink) 55%, transparent);
+ --font-body: var(--font-sans); --tracking-display: -0.035em; --display-weight: 700;
+ --space-2xl-half: 32px; --space-3xl-half: 48px; --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+ --dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms; --container: 1280px; --gutter: 32px; --gap-columns: 32px;
+ --text-md: 1rem; --text-section: clamp(2rem,4vw,3.5rem); --text-title: 1.5rem; --text-lead: 1.125rem;
+ --z-toast: 500; --radius: 4px;
+}

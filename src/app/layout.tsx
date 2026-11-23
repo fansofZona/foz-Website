@@ -50,9 +50,13 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={cn(luciole.variable, lucioleMath.variable, "font-sans")}
     >
+      <head>
+        <style id="hallmark-design-context">{`/* Hallmark · genre: editorial · theme: brand · job: join · posture: restrained · hero: Banner (/projects) Banner (/blogs) Banner (/research) Banner (/about) Stage (/) */`}</style>
+      </head>
       <body className="flex min-h-screen flex-col bg-canvas text-ink">
+        <a href="#main" className="skip-link">Skip to content</a>
         <SiteNav />
-        <main className="flex-1">{children}</main>
+        <main id="main" className="flex-1">{children}</main>
         <SiteFooter />
       </body>
     </html>

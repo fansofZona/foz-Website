@@ -31,7 +31,7 @@ export default function AboutPage() {
         <Shell>
 
           <h1 className="display-xl mt-8 max-w-5xl text-heading-3xl text-ink">
-            A room full of people who argue about sports with data
+            A club for questions worth checking
           </h1>
         </Shell>
       </section>
@@ -39,7 +39,7 @@ export default function AboutPage() {
       {/* Story */}
       <section className="pt-20">
         <Shell>
-          <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+          <div className="about-story grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
             <Card className="gap-0 rounded-card bg-surface p-10 ring-0 sm:p-16">
               <div className="space-y-6 text-body text-ink-muted">
                 <p>
@@ -58,7 +58,7 @@ export default function AboutPage() {
                 </p>
                 <p>
                   We work with public play-by-play data, tracking feeds, film we
-                  chart ourselves, and — increasingly — data shared directly by
+                  chart ourselves, and, increasingly, data shared directly by
                   campus teams who want a second opinion on something. Everything
                   we publish ships with its code, so the next person can pick it
                   up and prove us wrong.
@@ -89,7 +89,7 @@ export default function AboutPage() {
       {/* What we do */}
       <section className="pt-20">
         <Shell>
-          <h2 className="display-xl text-heading-3xl text-ink">What we do</h2>
+          <h2 className="display-xl text-heading-3xl text-ink">Research, engineering, writing</h2>
           <div className="mt-12 grid gap-8 sm:grid-cols-3">
             {tracks.map((t) => (
               <div
@@ -119,11 +119,11 @@ export default function AboutPage() {
               you can check.
             </p>
           </div>
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="member-grid mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {members.map((member) => (
               <Card
                 key={member.slug}
-                className="group gap-0 rounded-card bg-surface p-4 ring-0 transition-transform hover:-translate-y-1"
+                className="group gap-0 rounded-card bg-surface p-4 ring-0 "
               >
                 <Link
                   href={`/about/members/${member.slug}`}
@@ -135,7 +135,7 @@ export default function AboutPage() {
                       alt={member.imageAlt}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      className="object-cover"
                     />
                   </div>
                   <div className="p-3 pt-6">
@@ -181,10 +181,7 @@ export default function AboutPage() {
       <section className="pt-20">
         <Shell>
           <div className="relative overflow-hidden rounded-card bg-feature p-10 sm:p-16">
-            <div
-              className="halftone-dots-light pointer-events-none absolute inset-0 opacity-30"
-              aria-hidden
-            />
+
             <div className="relative">
               <h2 className="display-xl max-w-2xl text-heading-2xl text-chalk">
                 Come to a meeting

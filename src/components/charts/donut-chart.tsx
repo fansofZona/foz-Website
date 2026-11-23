@@ -64,7 +64,7 @@ export function DonutChart({
         style={{ height }}
       >
         <div className="relative w-full max-w-[420px] flex-1">
-          <svg viewBox={`0 0 ${W} ${height}`} className="h-auto w-full">
+          <svg role="img" aria-label={title ?? "Sports analytics proportions"} viewBox={`0 0 ${W} ${height}`} className="h-auto w-full">
             <Group left={CX} top={CY}>
               {arcs.map((a, i) => {
                 const lit = i === active;

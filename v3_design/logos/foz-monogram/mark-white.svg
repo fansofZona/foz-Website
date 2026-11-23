@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+<title id="title">FANS of Zona — FoZ Monogram, mark</title>
+<desc id="desc">Outlined vector artwork; no fonts required.</desc>
+<defs><mask id="o-counter" maskUnits="userSpaceOnUse" x="0" y="0" width="128" height="128"><rect width="128" height="128" fill="white"/><circle cx="65" cy="64" r="9" fill="black"/></mask></defs><g fill="#FFFFFF" mask="url(#o-counter)"><path d="M16 20H62V34H30V57H62V71H30V108H16Z"/><path d="M68 20H112V34L80 94H112V108H60V94L92 34H68Z"/><circle cx="65" cy="64" r="18"/></g>
+</svg>

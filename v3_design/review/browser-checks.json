@@ -1,0 +1,321 @@
+{
+  "backgrounds": [
+    {
+      "applied": "navy",
+      "bg": "navy",
+      "pressed": "true"
+    },
+    {
+      "applied": "red",
+      "bg": "red",
+      "pressed": "true"
+    },
+    {
+      "applied": "white",
+      "bg": "white",
+      "pressed": "true"
+    }
+  ],
+  "checks": [
+    {
+      "concept": "field-of-view",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "horizontal",
+      "imageLoaded": true,
+      "tone": "navy",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "field-of-view",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "horizontal",
+      "imageLoaded": true,
+      "tone": "red",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "field-of-view",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "horizontal",
+      "imageLoaded": true,
+      "tone": "white",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "field-of-view",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "stacked",
+      "imageLoaded": true,
+      "tone": "navy",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "field-of-view",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "stacked",
+      "imageLoaded": true,
+      "tone": "red",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "field-of-view",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "stacked",
+      "imageLoaded": true,
+      "tone": "white",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "field-of-view",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "mark",
+      "imageLoaded": true,
+      "tone": "navy",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "field-of-view",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "mark",
+      "imageLoaded": true,
+      "tone": "red",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "field-of-view",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "mark",
+      "imageLoaded": true,
+      "tone": "white",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "foz-monogram",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "horizontal",
+      "imageLoaded": true,
+      "tone": "navy",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "foz-monogram",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "horizontal",
+      "imageLoaded": true,
+      "tone": "red",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "foz-monogram",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "horizontal",
+      "imageLoaded": true,
+      "tone": "white",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "foz-monogram",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "stacked",
+      "imageLoaded": true,
+      "tone": "navy",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "foz-monogram",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "stacked",
+      "imageLoaded": true,
+      "tone": "red",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "foz-monogram",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "stacked",
+      "imageLoaded": true,
+      "tone": "white",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "foz-monogram",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "mark",
+      "imageLoaded": true,
+      "tone": "navy",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "foz-monogram",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "mark",
+      "imageLoaded": true,
+      "tone": "red",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "foz-monogram",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "mark",
+      "imageLoaded": true,
+      "tone": "white",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "academic-wordmark",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "horizontal",
+      "imageLoaded": true,
+      "tone": "navy",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "academic-wordmark",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "horizontal",
+      "imageLoaded": true,
+      "tone": "red",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "academic-wordmark",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "horizontal",
+      "imageLoaded": true,
+      "tone": "white",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "academic-wordmark",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "stacked",
+      "imageLoaded": true,
+      "tone": "navy",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "academic-wordmark",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "stacked",
+      "imageLoaded": true,
+      "tone": "red",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "academic-wordmark",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "stacked",
+      "imageLoaded": true,
+      "tone": "white",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "academic-wordmark",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "mark",
+      "imageLoaded": true,
+      "tone": "navy",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "academic-wordmark",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "mark",
+      "imageLoaded": true,
+      "tone": "red",
+      "whiteOnNavy": true
+    },
+    {
+      "concept": "academic-wordmark",
+      "downloads": [
+        200,
+        200
+      ],
+      "form": "mark",
+      "imageLoaded": true,
+      "tone": "white",
+      "whiteOnNavy": true
+    }
+  ],
+  "fontLoaded": true,
+  "scrollWidth": 1425,
+  "width": 1440
+}

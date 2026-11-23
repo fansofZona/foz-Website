@@ -1,307 +1,122 @@
+/* Hallmark · shape: Publication index · genre: editorial · theme: brand · redesign: full · job: join
+ * paper: Arizona caliche · accent: Arizona red · display: Luciole · body: Luciole · hero: Banner (/projects) Banner (/blogs) Banner (/research) Banner (/about) Stage (/) · nav: ruled masthead · footer: statement
+ * signature: possession-value chart from the published soccer research · axes: light/grotesk-heavy/warm · posture: restrained · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E3 S5 R4 V4 · weakest: E, inherited gradients removed from controls and content panels */
+/* Hallmark · waive 59 · publication index separated by solid rules and navy fields · projects and research use compact archive spacing so readers can scan the existing reports together */
+/* Hallmark · reworded "Argue about sports with data you can check" to "Argue about sports. Show your work." · 58 shorter headline */
+/* Hallmark · reworded "Projects, reports, and the tools underneath them" to "Projects, reports, and open tools" · 58 shorter headline */
+/* Hallmark · reworded "Short takes on data and method" to "Field notes on data and method" · 54 incorporates Field Notes label */
+/* Hallmark · reworded "A room full of people who argue about sports with data" to "A club for questions worth checking" · 58 shorter headline */
+/* Hallmark · dropped "0.24" · 46a replaces the decorative pitch value with the existing report's actual chart values */
+/* Hallmark · reworded "What we do" to "Research, engineering, writing" · 54 concrete heading names the club activities */
+/* Hallmark · dismissed 77 · collection pages are archives of the existing publications; adding empty sections would obscure the report index */
+/* Hallmark · answered F18 · shadcn data-slot attributes identify separators and the accessible one-pixel email label; they are not image replacement slots */
+/* Hallmark · answered F15 · hero uses a 64px column gap; below-hero compositions share 32px, while phone stacks use a 40px row gap */
+/* Hallmark · hero-review: in-thread · fix · primary contrast and chart sizing resolved */
+/* Hallmark · finish-review: in-thread · fix · filter and input contrast, navy focus rings, mobile navigation resolved · gap: none */
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-
+@import "./tokens.css";
+@import "./base.css" layer(base);
 @custom-variant dark (&:is(.dark *));
 
-@theme {
-  /* ---- University of Arizona brand palette ---- */
-  /* Primary */
-  --color-arizona-red: #ab0520;
-  --color-arizona-blue: #0c234b;
-  /* Secondary */
-  --color-tinta: #03132e;
-  --color-azurite: #1e5288;
-  --color-arroyo: #106ab1;
-  --color-rain: #81ceeb;
-  --color-sonoran: #850000;
-  --color-bougainvillea: #c62840;
-  /* Accent — never used for text */
-  --color-saguaro: #7f8b5a;
-  --color-shade: #3f7a7a;
-  --color-brick: #85372b;
-  /* Neutral */
-  --color-cloud: #e5eff7;
-  --color-caliche: #f2efea;
-  --color-chalk: #ffffff;
-
-  /* ---- Role aliases (the Caldera roles, mapped onto Arizona) ---- */
-  --color-canvas: var(--color-caliche);        /* page background        */
-  --color-surface: var(--color-chalk);         /* cards, content blocks  */
-  --color-surface-muted: var(--color-cloud);   /* secondary fills        */
-  --color-feature: var(--color-arizona-red);   /* the one loud surface   */
-  --color-plasma: var(--color-arizona-blue);   /* halftone / hero block  */
-  --color-tag: var(--color-rain);              /* category badges        */
-  --color-ink: var(--color-tinta);             /* headings + body text   */
-  --color-ink-muted: #4d5a6d;                  /* supporting copy, 6.1:1 */
-  --color-hairline: #d8d3cb;                   /* 1.5px rules on canvas  */
-
-  /* ---- Typography ---- */
-  /* Luciole for everything — https://luciole-vision.com/en/math.html
-     Designed for visually impaired readers. Luciole Math for figures. */
-  --font-display: var(--font-luciole), "Atkinson Hyperlegible", -apple-system,
-    BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  --font-sans: var(--font-luciole), "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Helvetica, Arial, sans-serif;
-  --font-meta: var(--font-luciole-math), var(--font-luciole), "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Helvetica, Arial, sans-serif;
-
-  /*
-    Scale — tightened for a student club site; heroes top out at 88px.
-
-    The three small steps are pinned to Tailwind's xs/sm/base slots so that
-    shadcn components, which ship `text-xs` / `text-sm` / `text-base`, land on
-    this site's sizes instead of fighting them with overrides.
-  */
-  --text-xs: 12px;
-  --text-xs--line-height: 1.4;
-
-  --text-sm: 14px;
-  --text-sm--line-height: 1.5;
-
-  --text-base: 16px;
-  --text-base--line-height: 1.6;
-
-  --text-caption: 12px;
-  --text-caption--line-height: 1.4;
-
-  --text-body-sm: 14px;
-  --text-body-sm--line-height: 1.5;
-
-  --text-body: 16px;
-  --text-body--line-height: 1.6;
-
-  --text-body-lg: 18px;
-  --text-body-lg--line-height: 1.6;
-
-  --text-subheading: 20px;
-  --text-subheading--line-height: 1.3;
-
-  --text-heading-sm: 24px;
-  --text-heading-sm--line-height: 1.25;
-
-  --text-heading: clamp(24px, 3vw, 30px);
-  --text-heading--line-height: 1.05;
-
-  --text-heading-lg: clamp(28px, 4vw, 44px);
-  --text-heading-lg--line-height: 1.02;
-
-  --text-heading-2xl: clamp(32px, 5vw, 56px);
-  --text-heading-2xl--line-height: 1;
-  --text-heading-2xl--letter-spacing: 0.01em;
-
-  --text-heading-3xl: clamp(36px, 6vw, 68px);
-  --text-heading-3xl--line-height: 0.98;
-  --text-heading-3xl--letter-spacing: 0.01em;
-
-  --text-display: clamp(44px, 8vw, 88px);
-  --text-display--line-height: 0.96;
-  --text-display--letter-spacing: 0.01em;
-
-  /* ---- Radii — the triple-radius system ---- */
-  --radius-small: 16px;
-  --radius-medium: 20px;
-  --radius-card: 40px;
-  --radius-button: 40px;
-  --radius-input: 100px;
-  --radius-pill: 800px;
+html { scroll-behavior: smooth; }
+html, body { overflow-x: clip; }
+body { background: var(--color-canvas); color: var(--color-ink); font-family: var(--font-sans); }
+::selection { background: var(--color-feature); color: var(--color-chalk); }
+:focus-visible { outline: 2px solid var(--color-feature) !important; outline-offset: 4px !important; transition: none !important; }
+.bg-plasma :focus-visible, footer :focus-visible { outline-color: var(--color-rain) !important; }
+h1,h2,h3 { overflow-wrap: break-word; min-width: 0; text-wrap: balance; }
+.display-xl,.display-sm { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.035em; }
+.ledger-figures { font-family: var(--font-sans); font-size: 14px; line-height: 1.5; letter-spacing: 0; font-variant-numeric: tabular-nums; color: var(--color-ink-muted); }
+.rule-dotted-x { border-top: 1px solid var(--color-hairline); }
+.rule-dotted-y { border-left: 1px solid var(--color-hairline); }
+.ledger-row { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: start; gap: var(--space-xl); padding: var(--space-2xl-half) 0; border-top: 1px solid var(--color-hairline); transition: color var(--dur-micro); }
+.ledger-row:hover .ledger-title { color: var(--color-feature); }
+.ledger-title { font-size: clamp(22px,2.3vw,30px); line-height: 1.25; }
+.site-header { position: relative; background: var(--color-canvas); }
+.site-header > div { padding-top: 0; padding-bottom: 0; }
+.site-header nav:first-child { min-height: 92px; padding: var(--space-md) 0; border-bottom: 2px solid var(--color-ink); background: transparent; border-radius: 0; }
+.site-header nav a[aria-current=page] { background: transparent; text-decoration: underline; text-decoration-color: var(--color-feature); text-decoration-thickness: 2px; text-underline-offset: 8px; }
+.site-header nav a { font-size: 14px; }
+.home-hero { padding: var(--space-3xl-half) 0 var(--space-2xl); }
+.home-hero-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,0.95fr); gap:var(--space-2xl); align-items:center; }
+.display-lead { font-size:clamp(48px,6.4vw,88px); line-height:1.01; letter-spacing:-0.045em; max-width:11ch; }
+.hero-deck { margin-top:28px; max-width:37ch; color:var(--color-ink-muted); font-size:18px; line-height:1.6; }
+.hero-actions { display:flex; flex-wrap:wrap; gap:var(--space-md); margin-top:var(--space-2xl-half); }
+.research-feature { background:var(--color-plasma); color:var(--color-chalk); padding:var(--space-2xl-half); min-height:520px; display:flex; flex-direction:column; justify-content:space-between; }
+.research-feature h2 { font-size:28px; line-height:1.2; max-width:18ch; letter-spacing:-0.025em; }
+.research-feature a { text-decoration:underline; text-underline-offset:5px; }
+.research-feature p { color:var(--color-cloud); font-size:14px; }
+.research-feature svg { width:100%; height:auto; overflow:visible; }
+.chart-grid { stroke:var(--color-chalk); opacity:0.15; }
+.chart-label { fill:var(--color-cloud); font-size:12px; }
+.chart-average { stroke:var(--color-rain); }
+.chart-baseline { stroke:var(--color-chalk); opacity:0.65; }
+.season-line { display:flex; justify-content:space-between; gap:var(--space-md); padding-bottom:var(--space-lg); margin-bottom:var(--space-xl); border-bottom:1px solid var(--color-hairline); font-size:13px; color:var(--color-ink-muted); }
+.home-section { padding:var(--space-3xl) 0; }
+.section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:var(--space-2xl-half); padding-bottom:var(--space-2xl-half); border-bottom:2px solid var(--color-ink); }
+.section-heading h2 { font-size:clamp(32px,4vw,52px); }
+.publication-list { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--space-2xl-half); }
+.publication-item { padding:var(--space-2xl-half) 0; border-bottom:1px solid var(--color-hairline); }
+.publication-item h3 { margin:var(--space-md) 0; font-size:25px; line-height:1.25; }
+.publication-item a:hover h3 { color:var(--color-feature); }
+.publication-item p { color:var(--color-ink-muted); font-size:14px; line-height:1.6; }
+.publication-meta { display:flex; flex-wrap:wrap; gap:var(--space-xs) var(--space-md); font-size:13px; color:var(--color-ink-muted); }
+.club-band { background:var(--color-plasma); color:var(--color-chalk); padding:72px 0; }
+.club-band-grid { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:var(--space-2xl); }
+.club-band h2 { font-size:clamp(34px,4.5vw,58px); max-width:16ch; }
+.club-band p { color:var(--color-cloud); font-size:18px; line-height:1.7; }
+.club-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--space-2xl-half); margin-top:var(--space-2xl); }
+.club-stats > div { border-top:1px solid var(--color-rain); }
+.club-stats p { color:var(--color-chalk); }
+.club-stats p:first-child { font-size:48px; }
+.track-list { margin-top:var(--space-2xl-half); }
+.track-row { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.7fr); gap:var(--space-2xl); padding:var(--space-2xl-half) 0; border-bottom:1px solid var(--color-hairline); }
+.track-row h3 { font-size:32px; }
+.track-row p { max-width:55ch; font-size:18px; color:var(--color-ink-muted); line-height:1.7; }
+.tools-line { margin-top:var(--space-xl); color:var(--color-ink-muted); max-width:70ch; line-height:1.8; }
+.join-section { padding:80px 0 var(--space-3xl); }
+.join-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:var(--space-2xl); border-top:2px solid var(--color-ink); padding-top:var(--space-3xl-half); }
+.join-layout h2 { font-size:clamp(36px,4.4vw,58px); }
+.join-layout p { font-size:18px; color:var(--color-ink-muted); line-height:1.7; }
+.site-footer { margin-top:80px; background:var(--color-plasma); color:var(--color-chalk); padding:var(--space-2xl) 0 var(--space-lg); }
+.footer-top { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:var(--space-2xl); padding-bottom:var(--space-3xl-half); border-bottom:1px solid var(--color-azurite); }
+.footer-top h2 { max-width:16ch; font-size:clamp(30px,3.5vw,44px); }
+.footer-top p { margin-top:20px; font-size:14px; color:var(--color-cloud); max-width:48ch; line-height:1.7; }
+.footer-bottom { display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr); gap:var(--space-2xl-half); padding:var(--space-3xl-half) 0; }
+.footer-wordmark { font-size:clamp(28px,4vw,48px); font-weight:700; letter-spacing:-0.04em; }
+.footer-bottom p { color:var(--color-cloud); font-size:14px; }
+.footer-bottom ul { display:grid; gap:var(--space-sm); margin-top:20px; font-size:14px; }
+.footer-bottom a:hover { text-decoration:underline; }
+.footer-legal { border-top:1px solid var(--color-azurite); padding-top:var(--space-lg); display:flex; justify-content:space-between; gap:var(--space-lg); font-size:12px; color:var(--color-cloud); }
+main > section:first-child:not(.home-hero) { padding-top:var(--space-2xl); }
+main > section:first-child:not(.home-hero) h1 { max-width:22ch; font-size:clamp(38px,5.5vw,72px); line-height:1.08; }
+main > section:first-child:not(.home-hero) + section { padding-top:var(--space-2xl); }
+.article-body { border-top:1px solid var(--color-hairline); padding-top:var(--space-2xl-half); }
+.article-body > p { font-size:18px; line-height:1.85; }
+.about-story [data-slot=card] { background:transparent; padding:0; }
+.about-story [data-slot=card]:last-child { padding-left:var(--space-2xl-half); border-left:1px solid var(--color-hairline); }
+.member-grid [data-slot=card] { background:transparent; padding:0; border-bottom:1px solid var(--color-hairline); border-radius:0; }
+.member-grid img { filter:saturate(0.6); }
+[data-slot=toggle-group] { flex-wrap:wrap; gap:var(--space-xs); }
+button, [data-slot=button] { transition:background-color var(--dur-short),color var(--dur-short),opacity var(--dur-short); }
+button:active, [data-slot=button]:active { transform:translateY(1px); }
+button:disabled, [aria-disabled=true] { opacity:0.5; cursor:not-allowed; }
+@media(min-width:1600px) { .home-hero { padding-bottom:80px; } }
+@media(max-width:1023px) { .home-hero-grid { gap:var(--space-2xl-half); } .display-lead { font-size:60px; } .research-feature { min-height:480px; padding:var(--space-lg); } }
+@media(max-width:767px) {
+ .site-header nav:first-child { min-height:76px; } .home-hero { padding-top:var(--space-lg); } .season-line { flex-direction:column; gap:var(--space-xs); margin-bottom:var(--space-2xl-half); }
+ .home-hero-grid,.club-band-grid,.join-layout,.footer-top { grid-template-columns:minmax(0,1fr); gap:var(--space-xl); }
+ .display-lead { font-size:clamp(46px,10vw,68px); max-width:12ch; } .research-feature { min-height:460px; margin-top:var(--space-xs); }
+ .hero-deck { font-size:17px; } .home-section { padding:var(--space-2xl) 0; } .publication-list { grid-template-columns:minmax(0,1fr); gap:0; }
+ .section-heading { align-items:start; flex-direction:column; gap:20px; } .club-stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .track-row { grid-template-columns:minmax(0,1fr); gap:var(--space-md); } .track-row p { font-size:16px; } .ledger-row { grid-template-columns:minmax(0,1fr); gap:var(--space-md); }
+ .footer-bottom { grid-template-columns:repeat(2,minmax(0,1fr)); } .footer-bottom > div:first-child { grid-column:1/-1; } .footer-legal { flex-direction:column; gap:var(--space-xs); }
+ .about-story [data-slot=card]:last-child { border:0; padding:0; } main > section:first-child:not(.home-hero) { padding-top:var(--space-xl); }
 }
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--color-canvas);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
-  font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-}
-
-::selection {
-  background: var(--color-arizona-red);
-  color: var(--color-chalk);
-}
-
-/*
-  One family carries both voices: Luciole Regular for the poster sizes, Luciole
-  Bold for the sub-headings. Luciole's open counters stay legible at 20–24px,
-  so tracking stays open (+0.01em) instead of tightening like a serif.
-*/
-@layer components {
-  /* Poster sizes — Luciole 400/700. */
-  .display-xl {
-    font-family: var(--font-display);
-    font-weight: 700;
-    letter-spacing: 0.01em;
-  }
-
-  /* Card and section-sub headings — Luciole Bold, open counters at small sizes. */
-  .display-sm {
-    font-family: var(--font-sans);
-    font-weight: 700;
-    letter-spacing: 0.01em;
-  }
-}
-
-/* Moving work ticker — seamless loop, pauses on hover or keyboard focus. */
-@keyframes ticker-scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.ticker {
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 4%,
-    #000 96%,
-    transparent
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 4%,
-    #000 96%,
-    transparent
-  );
-}
-
-.ticker-track {
-  display: flex;
-  gap: 1rem;
-  width: max-content;
-  animation: ticker-scroll 60s linear infinite;
-}
-
-.ticker:hover .ticker-track,
-.ticker:focus-within .ticker-track {
-  animation-play-state: paused;
-}
-
-/*
-  Signature motif — halftone dots emerging from a solid Arizona Red field at the
-  top right and dissolving into Arizona Blue toward the bottom left.
-*/
-.halftone-wash {
-  background: radial-gradient(
-    125% 125% at 88% 6%,
-    var(--color-arizona-red) 0%,
-    var(--color-arizona-red) 26%,
-    color-mix(in srgb, var(--color-arizona-red) 55%, transparent) 46%,
-    transparent 72%
-  );
-}
-
-.halftone-dots {
-  background-image: radial-gradient(
-    var(--color-arizona-red) 41%,
-    transparent 43%
-  );
-  background-size: 13px 13px;
-  -webkit-mask-image: radial-gradient(
-    140% 140% at 88% 6%,
-    #000 18%,
-    rgba(0, 0, 0, 0.9) 42%,
-    rgba(0, 0, 0, 0.45) 62%,
-    transparent 88%
-  );
-  mask-image: radial-gradient(
-    140% 140% at 88% 6%,
-    #000 18%,
-    rgba(0, 0, 0, 0.9) 42%,
-    rgba(0, 0, 0, 0.45) 62%,
-    transparent 88%
-  );
-}
-
-/* Same motif in Rain, for use on top of an Arizona Red surface. */
-.halftone-dots-light {
-  background-image: radial-gradient(var(--color-rain) 41%, transparent 43%);
-  background-size: 13px 13px;
-  -webkit-mask-image: radial-gradient(120% 120% at 10% 100%, #000 0%, transparent 70%);
-  mask-image: radial-gradient(120% 120% at 10% 100%, #000 0%, transparent 70%);
-}
-
-/* 1.5px dotted rules — vertical in nav and logo strips, horizontal as breaks. */
-.rule-dotted-y {
-  border-left: 1.5px dotted var(--color-ink);
-}
-
-.rule-dotted-x {
-  border-top: 1.5px dotted var(--color-ink);
-}
-
-/* Scorer's ledger — box-score rows, not cards. Left-aligned, tabular figures,
-   one dotted rule between entries. Red appears only as the annotation ink. */
-.ledger-row {
-  display: grid;
-  gap: 0.35rem;
-  padding: 1.25rem 0;
-  border-top: 1.5px dotted var(--color-ink);
-}
-
-@media (min-width: 768px) {
-  .ledger-row {
-    grid-template-columns: 1fr auto;
-    align-items: baseline;
-    gap: 2rem;
-  }
-}
-
-.ledger-figures {
-  font-family: var(--font-meta);
-  font-size: 12px;
-  line-height: 1.5;
-  letter-spacing: 0.02em;
-  font-variant-numeric: tabular-nums;
-  color: var(--color-ink-muted);
-}
-
-.ledger-row .ledger-title {
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 4px;
-}
-
-.ledger-row:hover .ledger-title,
-.ledger-row:focus-visible .ledger-title {
-  text-decoration: underline;
-  text-decoration-color: var(--color-arizona-red);
-}
-
-/* Field diagram — the single memorable figure. Chalk lines on Arizona Blue,
-   drawn with borders so it stays crisp at any size. */
-.field-frame {
-  border: 1.5px solid var(--color-chalk);
-}
-
-.field-frame-thin {
-  border: 1px solid color-mix(in srgb, var(--color-chalk) 65%, transparent);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .ticker-track {
-    animation: none;
-    flex-wrap: wrap;
-    width: auto;
-  }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none !important; transition:none !important; scroll-behavior:auto !important; } }
 @theme inline {
   /* shadcn utility names -> this site's own role tokens. */
   --font-heading: var(--font-display);
@@ -381,9 +196,8 @@ body {
   --chart-4: var(--color-rain);
   --chart-5: var(--color-saguaro);
 
-  /* --radius drives shadcn's radius scale; 20px puts radius-lg on this
-     site's medium radius and keeps radius-sm near the 16px small radius. */
-  --radius: 1.25rem;
+  /* Bridge the shared control radius to shadcn. */
+  --radius: 0.25rem;
 
   --sidebar: var(--color-plasma);
   --sidebar-foreground: var(--color-chalk);
@@ -406,3 +220,35 @@ body {
     @apply font-sans;
   }
 }
+
+[data-slot=button] { background-image:none; }
+[data-slot=button].bg-feature { background-color:var(--color-feature); color:var(--color-chalk); }
+[data-slot=button].bg-transparent { background-color:transparent; }
+.home-hero { padding-top:var(--space-lg); padding-bottom:var(--space-3xl-half); }
+.home-hero-grid { min-height:calc(100svh - 280px); }
+.research-feature figure { margin:var(--space-lg) 0; }
+.research-feature a { white-space:nowrap; font-size:14px; }
+.club-stats p { font-variant-numeric:tabular-nums; }
+[data-slot=toggle-group] { width:auto; min-width:0; }
+@media(max-width:767px) { .home-hero-grid { min-height:0; } .research-feature { min-height:440px; } }
+
+.skip-link { position:absolute; transform:translateY(-200%); z-index:600; padding:var(--space-md); background:var(--color-plasma); color:var(--color-chalk); }
+.skip-link:focus-visible { transform:none; }
+.blog-feature { border-top:2px solid var(--color-ink); border-radius:0; }
+
+.research-feature :focus-visible, .bg-feature :focus-visible { outline-color:var(--color-rain) !important; }
+.bg-feature .bg-chalk:focus-visible { outline-color:var(--color-chalk) !important; }
+[data-slot=toggle-group-item] { background-image:none; min-height:44px; }
+[data-slot=toggle-group-item][data-state=on] { background-color:var(--color-feature); color:var(--color-chalk); }
+[data-slot=input] { background-image:none; }
+.site-footer [data-slot=input] { background:transparent; color:var(--color-chalk); min-height:52px; padding:var(--space-md); }
+.site-footer [data-slot=input]::placeholder { color:var(--color-cloud); opacity:1; }
+[data-slot=card] { background-image:none; }
+.blog-feature h2 { font-size:clamp(30px,4vw,48px); line-height:1.15; }
+main > section:first-child:not(.home-hero) { padding-top:var(--space-3xl-half); }
+main > section:first-child:not(.home-hero) h1 { margin-top:0; }
+.join-layout h2 { font-size:72px; }
+@media(max-width:767px) { .join-layout h2 { font-size:44px; } }
+
+.club-band-grid, .track-row, .join-layout, .footer-top { column-gap:var(--gap-columns); }
+@media(prefers-reduced-motion:reduce) { button:active, [data-slot=button]:active { transform:none; } }

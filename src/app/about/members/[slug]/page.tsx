@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { DottedDivider, Eyebrow, SecondaryAnchor, Shell, Tag } from "@/components/primitives";
+import { DottedDivider, SecondaryAnchor, Shell, Tag } from "@/components/primitives";
 import { PostCard } from "@/components/post-card";
 import { Card } from "@/components/ui/card";
 import { getMember, getMemberSlugs } from "@/content/members";
@@ -58,7 +58,7 @@ export default async function MemberProfilePage({ params }: Props) {
 
       <section className="pt-12">
         <Shell>
-          <div className="grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
+          <div className="grid gap-4 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
             <div className="relative aspect-[4/5] overflow-hidden rounded-card bg-surface-muted">
               <Image
                 src={member.image}
@@ -70,7 +70,7 @@ export default async function MemberProfilePage({ params }: Props) {
               />
             </div>
             <Card className="flex-col rounded-card bg-surface p-10 ring-0 sm:p-16">
-              <Eyebrow>About {firstName}</Eyebrow>
+              <h2 className="text-subheading">About {firstName}</h2>
               <p className="mt-6 text-body-lg text-ink">{member.bio}</p>
 
               <DottedDivider className="mt-10" />

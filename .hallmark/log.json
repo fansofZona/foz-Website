@@ -1,0 +1,30 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "site",
+  "shape": "Publication index",
+  "theme": "brand",
+  "axes": "light/grotesk-heavy/warm",
+  "hero": "Stage home, Banner archives",
+  "nav": "ruled masthead",
+  "footer": "statement",
+  "imagery": "existing member SVG assets; chart from published xT report",
+  "photos": [],
+  "entry": "src/app/page.tsx",
+  "fingerprint": "arizona-luciole-ruled-publication",
+  "sections": [
+   "featured research",
+   "publication index",
+   "club activity",
+   "working groups",
+   "first meeting"
+  ],
+  "signature": "Sourced accumulated expected-threat chart",
+  "waived": [
+   "59"
+  ],
+  "prompt": "Redo the FANS of Zona website with Hallmark",
+  "date": "2026-11-05"
+ }
+]

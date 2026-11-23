@@ -14,7 +14,7 @@ export function CollectionIndex({ collection }: { collection: PostCollection }) 
     <>
       <section className="pt-8 sm:pt-12">
         <Shell>
-          <p className="text-body-sm text-ink-muted">{info.tag}</p>
+
 
           <h1 className="display-xl mt-4 max-w-[16ch] text-heading-3xl text-ink">
             {info.title}

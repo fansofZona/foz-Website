@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
+  SheetClose,
   SheetDescription,
   SheetHeader,
   SheetTitle,
@@ -27,7 +28,7 @@ export function SiteNav() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 bg-canvas/90 backdrop-blur-sm">
+    <header className="site-header z-50">
       <div className="mx-auto w-full max-w-[1280px] px-5 py-4 sm:px-8">
         {/* The nav row sits inside a Limestone pill — a signature element. */}
         <nav className="flex items-center justify-between gap-4 rounded-pill bg-surface py-3 pl-6 pr-3">
@@ -89,7 +90,7 @@ export function SiteNav() {
             </SheetTrigger>
             <SheetContent
               side="right"
-              showCloseButton={false}
+              showCloseButton={true}
               className="w-4/5 gap-0 bg-surface p-6 text-ink sm:max-w-sm"
             >
               <SheetHeader>
@@ -102,13 +103,15 @@ export function SiteNav() {
               </SheetHeader>
               <nav className="flex flex-col">
                 {links.map((l) => (
-                  <Link
-                    key={l.href}
-                    href={l.href}
-                    className="border-b-[1.5px] border-dotted border-ink py-4 text-body text-ink-muted transition-colors hover:text-ink"
-                  >
-                    {l.label}
-                  </Link>
+                  <SheetClose asChild key={l.href}>
+                    <Link
+                      href={l.href}
+                      aria-current={(l.href === "/" ? pathname === "/" : pathname.startsWith(l.href)) ? "page" : undefined}
+                      className="border-b-[1.5px] border-dotted border-ink py-4 text-body text-ink-muted transition-colors hover:text-ink"
+                    >
+                      {l.label}
+                    </Link>
+                  </SheetClose>
                 ))}
                 <Button
                   asChild

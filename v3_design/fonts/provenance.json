@@ -1,0 +1,26 @@
+[
+  {
+    "file": "geist-regular.woff2",
+    "family": "Geist",
+    "copyright": "Copyright 2024 The Geist Project Authors (https://github.com/vercel/geist-font)",
+    "source": "Local installed Geist-Regular.ttf",
+    "upstream": "https://github.com/vercel/geist-font",
+    "license": "SIL Open Font License 1.1"
+  },
+  {
+    "file": "geist-medium.woff2",
+    "family": "Geist Medium",
+    "copyright": "Copyright 2024 The Geist Project Authors (https://github.com/vercel/geist-font)",
+    "source": "Local installed Geist-Medium.ttf",
+    "upstream": "https://github.com/vercel/geist-font",
+    "license": "SIL Open Font License 1.1"
+  },
+  {
+    "file": "geist-serif-regular.woff2",
+    "family": "Geist Serif",
+    "copyright": "Copyright 2026 The Geist Project Authors (https://github.com/vercel/geist-font)",
+    "source": "Local installed GeistSerif-Regular.ttf",
+    "upstream": "https://github.com/vercel/geist-font",
+    "license": "SIL Open Font License 1.1"
+  }
+]

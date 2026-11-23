@@ -1,0 +1,42 @@
+{
+  "badImages": 0,
+  "fonts": [
+    {
+      "family": "Geist",
+      "status": "loaded"
+    },
+    {
+      "family": "Geist",
+      "status": "loaded"
+    },
+    {
+      "family": "Geist Serif",
+      "status": "loaded"
+    }
+  ],
+  "height": 7918,
+  "rects": [
+    {
+      "height": 532.625,
+      "name": "applications",
+      "top": 1872.0390625
+    },
+    {
+      "height": 513.59375,
+      "name": "concept-overview",
+      "top": 2833.0546875
+    },
+    {
+      "height": 526.4453125,
+      "name": "applications",
+      "top": 4842.0546875
+    },
+    {
+      "height": 378.59375,
+      "name": "type-system",
+      "top": 6098.890625
+    }
+  ],
+  "scrollWidth": 1425,
+  "width": 1440
+}

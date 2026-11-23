@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "geist",
+        "createdAt": "2026-11-22T20:33:55.035Z",
+        "reason": "User confirmed Geist Serif + Geist Sans in the font-pairing selection for FoZ V3; the brand exploration intentionally uses that selected pairing."
+      }
+    ]
+  }
+}

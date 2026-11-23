@@ -16,10 +16,10 @@ export default function ProjectsPage() {
     <>
       <section className="pt-8 sm:pt-12">
         <Shell>
-          <p className="text-body-sm text-ink-muted">Published work</p>
+
 
           <h1 className="display-xl mt-4 max-w-[18ch] text-heading-3xl text-ink">
-            Projects, reports, and the tools underneath them
+            Projects, reports, and open tools
           </h1>
 
           <p className="mt-6 max-w-[60ch] text-body-lg text-ink-muted">

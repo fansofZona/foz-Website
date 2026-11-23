@@ -33,7 +33,7 @@ export function PostPage({
           </p>
 
           <p className="font-meta ledger-figures mt-8">
-            {meta.kind}, {meta.sport}, {meta.year} — by{" "}
+            {meta.kind}, {meta.sport}, {meta.year}, by{" "}
             {meta.authors.join(", ")}
           </p>
           {meta.stack?.length ? (
@@ -46,7 +46,7 @@ export function PostPage({
 
       <section className="pt-12">
         <Shell>
-          <article className="mx-auto max-w-[760px] pb-2">{children}</article>
+          <article className="article-body mx-auto max-w-[760px] pb-2">{children}</article>
         </Shell>
       </section>
     </>

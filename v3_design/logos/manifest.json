@@ -1,0 +1,191 @@
+[
+  {
+    "concept": "field-of-view",
+    "form": "mark",
+    "tone": "navy",
+    "svg": "logos/field-of-view/mark-navy.svg",
+    "png": "logos/field-of-view/mark-navy.png"
+  },
+  {
+    "concept": "field-of-view",
+    "form": "mark",
+    "tone": "red",
+    "svg": "logos/field-of-view/mark-red.svg",
+    "png": "logos/field-of-view/mark-red.png"
+  },
+  {
+    "concept": "field-of-view",
+    "form": "mark",
+    "tone": "white",
+    "svg": "logos/field-of-view/mark-white.svg",
+    "png": "logos/field-of-view/mark-white.png"
+  },
+  {
+    "concept": "field-of-view",
+    "form": "horizontal",
+    "tone": "navy",
+    "svg": "logos/field-of-view/horizontal-navy.svg",
+    "png": "logos/field-of-view/horizontal-navy.png"
+  },
+  {
+    "concept": "field-of-view",
+    "form": "horizontal",
+    "tone": "red",
+    "svg": "logos/field-of-view/horizontal-red.svg",
+    "png": "logos/field-of-view/horizontal-red.png"
+  },
+  {
+    "concept": "field-of-view",
+    "form": "horizontal",
+    "tone": "white",
+    "svg": "logos/field-of-view/horizontal-white.svg",
+    "png": "logos/field-of-view/horizontal-white.png"
+  },
+  {
+    "concept": "field-of-view",
+    "form": "stacked",
+    "tone": "navy",
+    "svg": "logos/field-of-view/stacked-navy.svg",
+    "png": "logos/field-of-view/stacked-navy.png"
+  },
+  {
+    "concept": "field-of-view",
+    "form": "stacked",
+    "tone": "red",
+    "svg": "logos/field-of-view/stacked-red.svg",
+    "png": "logos/field-of-view/stacked-red.png"
+  },
+  {
+    "concept": "field-of-view",
+    "form": "stacked",
+    "tone": "white",
+    "svg": "logos/field-of-view/stacked-white.svg",
+    "png": "logos/field-of-view/stacked-white.png"
+  },
+  {
+    "concept": "foz-monogram",
+    "form": "mark",
+    "tone": "navy",
+    "svg": "logos/foz-monogram/mark-navy.svg",
+    "png": "logos/foz-monogram/mark-navy.png"
+  },
+  {
+    "concept": "foz-monogram",
+    "form": "mark",
+    "tone": "red",
+    "svg": "logos/foz-monogram/mark-red.svg",
+    "png": "logos/foz-monogram/mark-red.png"
+  },
+  {
+    "concept": "foz-monogram",
+    "form": "mark",
+    "tone": "white",
+    "svg": "logos/foz-monogram/mark-white.svg",
+    "png": "logos/foz-monogram/mark-white.png"
+  },
+  {
+    "concept": "foz-monogram",
+    "form": "horizontal",
+    "tone": "navy",
+    "svg": "logos/foz-monogram/horizontal-navy.svg",
+    "png": "logos/foz-monogram/horizontal-navy.png"
+  },
+  {
+    "concept": "foz-monogram",
+    "form": "horizontal",
+    "tone": "red",
+    "svg": "logos/foz-monogram/horizontal-red.svg",
+    "png": "logos/foz-monogram/horizontal-red.png"
+  },
+  {
+    "concept": "foz-monogram",
+    "form": "horizontal",
+    "tone": "white",
+    "svg": "logos/foz-monogram/horizontal-white.svg",
+    "png": "logos/foz-monogram/horizontal-white.png"
+  },
+  {
+    "concept": "foz-monogram",
+    "form": "stacked",
+    "tone": "navy",
+    "svg": "logos/foz-monogram/stacked-navy.svg",
+    "png": "logos/foz-monogram/stacked-navy.png"
+  },
+  {
+    "concept": "foz-monogram",
+    "form": "stacked",
+    "tone": "red",
+    "svg": "logos/foz-monogram/stacked-red.svg",
+    "png": "logos/foz-monogram/stacked-red.png"
+  },
+  {
+    "concept": "foz-monogram",
+    "form": "stacked",
+    "tone": "white",
+    "svg": "logos/foz-monogram/stacked-white.svg",
+    "png": "logos/foz-monogram/stacked-white.png"
+  },
+  {
+    "concept": "academic-wordmark",
+    "form": "mark",
+    "tone": "navy",
+    "svg": "logos/academic-wordmark/mark-navy.svg",
+    "png": "logos/academic-wordmark/mark-navy.png"
+  },
+  {
+    "concept": "academic-wordmark",
+    "form": "mark",
+    "tone": "red",
+    "svg": "logos/academic-wordmark/mark-red.svg",
+    "png": "logos/academic-wordmark/mark-red.png"
+  },
+  {
+    "concept": "academic-wordmark",
+    "form": "mark",
+    "tone": "white",
+    "svg": "logos/academic-wordmark/mark-white.svg",
+    "png": "logos/academic-wordmark/mark-white.png"
+  },
+  {
+    "concept": "academic-wordmark",
+    "form": "horizontal",
+    "tone": "navy",
+    "svg": "logos/academic-wordmark/horizontal-navy.svg",
+    "png": "logos/academic-wordmark/horizontal-navy.png"
+  },
+  {
+    "concept": "academic-wordmark",
+    "form": "horizontal",
+    "tone": "red",
+    "svg": "logos/academic-wordmark/horizontal-red.svg",
+    "png": "logos/academic-wordmark/horizontal-red.png"
+  },
+  {
+    "concept": "academic-wordmark",
+    "form": "horizontal",
+    "tone": "white",
+    "svg": "logos/academic-wordmark/horizontal-white.svg",
+    "png": "logos/academic-wordmark/horizontal-white.png"
+  },
+  {
+    "concept": "academic-wordmark",
+    "form": "stacked",
+    "tone": "navy",
+    "svg": "logos/academic-wordmark/stacked-navy.svg",
+    "png": "logos/academic-wordmark/stacked-navy.png"
+  },
+  {
+    "concept": "academic-wordmark",
+    "form": "stacked",
+    "tone": "red",
+    "svg": "logos/academic-wordmark/stacked-red.svg",
+    "png": "logos/academic-wordmark/stacked-red.png"
+  },
+  {
+    "concept": "academic-wordmark",
+    "form": "stacked",
+    "tone": "white",
+    "svg": "logos/academic-wordmark/stacked-white.svg",
+    "png": "logos/academic-wordmark/stacked-white.png"
+  }
+]
